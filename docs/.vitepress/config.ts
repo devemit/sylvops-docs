@@ -2,6 +2,7 @@ import { defineConfig } from "vitepress";
 import { release } from "./data/release";
 
 const pages = [
+  { text: "Why SylvOps", link: "/why-sylvops" },
   { text: "Getting started", link: "/getting-started" },
   { text: "Installation", link: "/installation" },
   { text: "Core concepts", link: "/core-concepts" },
@@ -67,6 +68,7 @@ export default defineConfig({
     logo: { src: "/sylvops.png", alt: "SylvOps tree" },
     siteTitle: "SylvOps Docs",
     nav: [
+      { text: "Why SylvOps", link: "/why-sylvops" },
       { text: "Guide", link: "/getting-started" },
       { text: "Install", link: "/installation" },
       { text: "CLI", link: "/cli-reference" },
@@ -75,11 +77,11 @@ export default defineConfig({
     sidebar: [
       {
         text: "Overview",
-        items: [{ text: "Home", link: "/" }, ...pages.slice(0, 2)],
+        items: [{ text: "Home", link: "/" }, ...pages.slice(0, 3)],
       },
-      { text: "Learn", items: pages.slice(2, 7) },
-      { text: "Operate safely", items: pages.slice(7, 10) },
-      { text: "Project", items: pages.slice(10) },
+      { text: "Learn", items: pages.slice(3, 8) },
+      { text: "Operate safely", items: pages.slice(8, 11) },
+      { text: "Project", items: pages.slice(11) },
     ],
     outline: { level: [2, 3], label: "On this page" },
     socialLinks: [{ icon: "github", link: release.repositoryUrl }],

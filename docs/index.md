@@ -22,6 +22,17 @@ pageClass: home-page-shell
     <HomeMark />
   </section>
 
+  <section class="why-panel" aria-labelledby="why-sylvops-heading">
+    <div>
+      <p class="eyebrow">Why another developer tool?</p>
+      <h2 id="why-sylvops-heading">The work is not the problem. Keeping track of it is.</h2>
+    </div>
+    <div>
+      <p>Codex desktop, Cursor, and Windows Terminal are useful places to do the work. SylvOps adds the missing map: which task owns which branch, checkout, agent, and terminal—and which sessions are still running.</p>
+      <a class="button-secondary" href="./why-sylvops">Why I use SylvOps</a>
+    </div>
+  </section>
+
   <section class="home-grid" aria-label="Documentation highlights">
     <article class="home-card">
       <h2>Local by design</h2>
