@@ -33,13 +33,13 @@ When a new public SylvOps release is published, update `docs/.vitepress/data/rel
 
 ## Deployment
 
-Pull requests and `main` are build-checked by `.github/workflows/ci.yml`. Publication is intentionally separate:
+Pull requests and `main` are build-checked by `.github/workflows/ci.yml`. The Pages workflow publishes automatically after an approved change reaches `main`:
 
-1. Merge an approved documentation pull request.
-2. In repository settings, configure GitHub Pages to use **GitHub Actions**. This setting is not changed by the repository.
-3. Manually run the **Deploy documentation to Pages** workflow from `main`.
+1. In repository settings, configure GitHub Pages to use **GitHub Actions** once. This setting is not changed by the repository.
+2. Merge an approved documentation pull request into `main`.
+3. Wait for **Deploy documentation to Pages** to finish.
 
-The deployment workflow does not run on pushes or pull requests.
+The deployment workflow can also be started manually from `main` when a retry is needed. Pull requests build and validate the site but never publish it.
 
 ## License
 
