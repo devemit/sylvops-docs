@@ -51,10 +51,6 @@ claude auth login
 claude auth status
 ```
 
-::: warning RELEASE AVAILABILITY — Claude Code
-Claude Code support is enabled in the current SylvOps source, but the published <ReleaseVersion /> package predates that merge. Build the current source to use it until a newer package is published.
-:::
-
 SylvOps does not install or update provider CLIs, perform login, copy credentials, store provider secrets, or choose a provider's permission mode.
 
 ## 4. Launch SylvOps with a repository

@@ -7,10 +7,6 @@ description: Use the Shell, Codex, and Claude Code providers; understand native 
 
 A provider tells the daemon which interactive process to start in a checkout. Shell is built in; Codex and Claude Code use separately installed native CLIs and the provider's existing authentication.
 
-::: warning RELEASE AVAILABILITY — Claude Code
-Claude Code support is enabled in the current SylvOps source after [issue #78](https://github.com/devemit/sylvops/issues/78). The published <ReleaseVersion /> package predates that merge. Build the current source to use Claude Code until a newer package is published.
-:::
-
 ## Shell provider
 
 Shell launches the platform's normal interactive shell inside the selected checkout and requires no agent account.
