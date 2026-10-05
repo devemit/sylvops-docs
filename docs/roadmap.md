@@ -26,7 +26,7 @@ These items are not available in the current public preview. Do not rely on them
 
 ## Providers and execution
 
-- Claude provider support
+- Claude cloud sessions, background-agent management, Remote Control, plugins, and enterprise authentication
 - Remote execution
 - Additional provider adapters after the same safety and recovery requirements are met
 

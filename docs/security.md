@@ -11,7 +11,7 @@ SylvOps treats repository content, provider output, Git output, hooks, configura
 
 Repositories, worktrees, the database, terminal processes, and bounded terminal history live on your computer. The control interface does not listen on a network TCP port.
 
-Codex may use its own network services according to your Codex configuration and account. SylvOps does not proxy or replace that provider behavior.
+Codex and Claude Code may use their own network services according to their configuration and account. SylvOps does not proxy or replace provider behavior.
 
 ## Authenticated local IPC
 
@@ -29,10 +29,12 @@ The daemon is the only authority for persisted state, PTYs, process trees, Git m
 ## Credentials and prompts
 
 ::: tip SECURITY — Provider credentials stay with the provider
-SylvOps does not install providers, initiate login, copy credentials, persist authentication state, or log environment values. Codex continues to use its own configured credential storage.
+SylvOps does not install or update providers, initiate login, copy credentials, persist authentication state, or log environment values. Codex and Claude Code continue to use their own configured credential storage.
 :::
 
-Codex launches receive a reviewed environment that retains `CODEX_HOME` but excludes provider and GitHub API-key variables. Initial prompts are transient and are not written to prompt history or persisted provider arguments.
+Provider launches receive a reviewed environment that retains the provider's supported configuration-directory variable while excluding provider and GitHub API-key variables. Initial prompts are transient and are not written to prompt history, logs, audit events, SQLite, or persisted provider arguments.
+
+Claude Code launches also receive an application-owned settings layer and per-session hook credential. The layer contains no provider credentials, preserves the effective user, project, and organization settings, and is removed when the daemon exits. Its hooks observe bounded lifecycle events; they cannot approve permissions, answer prompts, change permission mode, or rewrite Claude activity.
 
 ## Repository and provider output
 
