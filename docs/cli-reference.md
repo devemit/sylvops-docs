@@ -28,7 +28,7 @@ sylvops [--state-dir <DIRECTORY>] [COMMAND]
 
 ```text
 --workspace <NAME>
---provider <shell|codex>
+--provider <shell|codex|claude>
 --model <MODEL>
 --effort <EFFORT>
 --prompt <PROMPT>
@@ -87,7 +87,7 @@ sylvops worktree remove <WORKTREE_ID> --confirm
 sylvops session create \
   --worktree <WORKTREE_ID> \
   [--name <DISPLAY_NAME>] \
-  [--provider <shell|codex>] \
+  [--provider <shell|codex|claude>] \
   [--model <MODEL>] \
   [--effort <EFFORT>] \
   [--prompt <PROMPT>] \
@@ -107,9 +107,12 @@ Defaults are Shell, 80 columns, and 24 rows. While attached from the CLI, press 
 sylvops provider list
 sylvops provider probe shell
 sylvops provider probe codex
+sylvops provider probe claude
 ```
 
 `list` shows registered provider health. `probe` refreshes discovery and authentication state.
+
+Claude Code requires version 2.1.145 or newer and supported first-party authentication. For Codex and Claude Code, `--model`, `--effort`, and `--prompt` are advanced CLI-only creation options. Claude effort accepts `low`, `medium`, `high`, `xhigh`, or `max`.
 
 ## Updates
 

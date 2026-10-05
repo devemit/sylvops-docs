@@ -1,11 +1,11 @@
 ---
 title: Getting started
-description: Install the SylvOps preview, register a repository, create a checkout, and start your first Shell or Codex session.
+description: Install SylvOps, register a repository, create a checkout, and start a Shell, Codex, or Claude Code session.
 ---
 
 # Getting started
 
-This walkthrough takes you from a fresh computer to an attached terminal in SylvOps. Git is required. Codex is optional.
+This walkthrough takes you from a fresh computer to an attached terminal in SylvOps. Git is required. Codex and Claude Code are optional.
 
 ::: warning PREVIEW — Current public release
 The public build is an unsigned testing preview. Windows and Linux x86_64 packages are available; macOS is not included. See [Installation](./installation) before downloading.
@@ -32,16 +32,30 @@ Follow the instructions for your platform:
 
 The current public version is <ReleaseVersion />.
 
-## 3. Optionally install Codex
+## 3. Optionally install an agent CLI
 
-You can use the built-in Shell provider without installing another agent. To use Codex, install the Codex CLI separately using the [official Codex CLI guide](https://learn.chatgpt.com/docs/codex/cli), then sign in:
+You can use the built-in Shell provider without installing another agent. Install and authenticate each agent CLI outside SylvOps.
+
+For Codex, follow the [official Codex CLI guide](https://learn.chatgpt.com/docs/codex/cli):
 
 ```sh
 codex login
 codex login status
 ```
 
-SylvOps does not install Codex, perform the login, copy credentials, or store provider secrets.
+For Claude Code, install an official native CLI version 2.1.145 or newer using the [official Claude Code setup guide](https://docs.anthropic.com/en/docs/claude-code/getting-started), then sign in with Claude.ai or Anthropic Console:
+
+```sh
+claude --version
+claude auth login
+claude auth status
+```
+
+::: warning RELEASE AVAILABILITY — Claude Code
+Claude Code support is enabled in the current SylvOps source, but the published <ReleaseVersion /> package predates that merge. Build the current source to use it until a newer package is published.
+:::
+
+SylvOps does not install or update provider CLIs, perform login, copy credentials, store provider secrets, or choose a provider's permission mode.
 
 ## 4. Launch SylvOps with a repository
 
@@ -90,9 +104,10 @@ Select a checkout, then choose **New session**:
 
 - Choose **Shell** for a normal interactive terminal.
 - Choose **Codex** to launch your already-installed and authenticated Codex CLI.
+- Choose **Claude Code** to launch a supported, already-installed and authenticated Claude Code CLI.
 - Optionally give the session a display name.
 
-Advanced Codex model, effort, and initial-prompt options are available through the CLI rather than the desktop form.
+Advanced Codex and Claude Code model, effort, and initial-prompt options are available through the CLI rather than the desktop or TUI form.
 
 ## 9. Open the embedded terminal
 
@@ -104,4 +119,4 @@ Choose **Stop** only when you want SylvOps to terminate the session and its comp
 
 - Learn [how Git worktrees behave](./working-with-git).
 - Run [several agents safely](./multiple-agents).
-- Review [provider troubleshooting](./providers#troubleshoot-codex).
+- Review [provider setup and troubleshooting](./providers).

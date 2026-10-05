@@ -35,7 +35,7 @@ SylvOps currently does not commit, push, merge, rebase, or create pull requests 
 
 ## Session
 
-A session is one interactive process running inside a checkout. It can use the Shell or Codex provider. The daemon—not the desktop window—owns its PTY and complete process tree.
+A session is one interactive process running inside a checkout. It can use the Shell, Codex, or Claude Code provider. The daemon—not the desktop window—owns its PTY and complete process tree.
 
 Leaving the terminal or closing a client does not stop the session. Explicitly choosing **Stop** does.
 
@@ -45,8 +45,9 @@ A provider adapts an interactive command to SylvOps. The current providers are:
 
 - **Shell**, using the platform's normal interactive shell.
 - **Codex**, using a separately installed and authenticated Codex CLI.
+- **Claude Code**, using a separately installed, supported, and authenticated native Claude Code CLI.
 
-Provider status includes executable availability, authentication status where relevant, version, and capabilities.
+Provider status includes executable availability, authentication status where relevant, version, and capabilities. Shell remains the default provider.
 
 ## Daemon
 

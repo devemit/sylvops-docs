@@ -13,17 +13,17 @@ For every task, create:
 
 1. one branch;
 2. one managed worktree;
-3. one Shell or Codex session.
+3. one Shell, Codex, or Claude Code session.
 
 The agent starts with that worktree as its working directory. It sees the files on its branch, not uncommitted changes in another checkout.
 
 ## Example: three concurrent tasks
 
-| Task                | Branch                    | Checkout        | Session         |
-| ------------------- | ------------------------- | --------------- | --------------- |
-| Add onboarding copy | `feature/onboarding-copy` | Onboarding copy | Codex · Copy    |
-| Fix daemon restart  | `fix/daemon-restart`      | Daemon restart  | Codex · Restart |
-| Update release docs | `docs/release-guide`      | Release guide   | Shell · Docs    |
+| Task                | Branch                    | Checkout        | Session               |
+| ------------------- | ------------------------- | --------------- | --------------------- |
+| Add onboarding copy | `feature/onboarding-copy` | Onboarding copy | Codex · Copy          |
+| Fix daemon restart  | `fix/daemon-restart`      | Daemon restart  | Claude Code · Restart |
+| Update release docs | `docs/release-guide`      | Release guide   | Shell · Docs          |
 
 All three sessions can run at the same time. Their terminal output, process trees, and working directories remain separate.
 

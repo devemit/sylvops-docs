@@ -12,7 +12,7 @@ pageClass: home-page-shell
     <div>
       <p class="eyebrow">Local-first agent mission control</p>
       <h1 class="home-title">One task.<br>One branch.<br>One agent.</h1>
-      <p class="home-lede">SylvOps helps you run interactive Shell and Codex sessions in real Git worktrees, keep concurrent tasks isolated, and return to every terminal from one native desktop app.</p>
+      <p class="home-lede">SylvOps helps you run interactive Shell, Codex, and Claude Code sessions in real Git worktrees, keep concurrent tasks isolated, and return to every terminal from one native desktop app.</p>
       <ReleaseBadge />
       <div class="home-actions">
         <a class="button-primary" href="./getting-started">Get started</a>

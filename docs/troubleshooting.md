@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: Diagnose Git, Codex, daemon, version, session, worktree-removal, package, and preview-warning problems.
+description: Diagnose Git, Codex, Claude Code, daemon, version, session, worktree-removal, package, and preview-warning problems.
 ---
 
 # Troubleshooting
@@ -60,6 +60,47 @@ sylvops provider probe codex
 ```
 
 Complete authentication outside SylvOps. See the [official authentication guide](https://learn.chatgpt.com/docs/auth).
+
+## Claude Code is missing or too old
+
+### Symptoms
+
+`sylvops provider probe claude` reports `available: false`, no supported executable path, an unrecognized version, or a version older than 2.1.145.
+
+### Fix
+
+```sh
+claude --version
+sylvops provider probe claude
+```
+
+Install or update the official native CLI using the [Claude Code setup guide](https://docs.anthropic.com/en/docs/claude-code/getting-started), then choose **Refresh provider health**. SylvOps rejects shell shims, desktop-app binaries, wrong-architecture binaries, and unsupported paths.
+
+## Claude Code login is required or unsupported
+
+### Symptoms
+
+Claude Code is available but reports `authenticated: false`, a logged-out state, or an unsupported authentication method.
+
+### Fix
+
+```sh
+claude auth login
+claude auth status
+sylvops provider probe claude
+```
+
+Sign in outside SylvOps with Claude.ai or Anthropic Console. Third-party gateways and enterprise authentication modes such as Bedrock or Vertex AI are not supported by the current SylvOps provider.
+
+## Claude Code session identity is not confirmed
+
+### Symptoms
+
+A newly launched Claude Code session remains attached and usable, but SylvOps reports that it did not receive the expected `SessionStart` identity within 15 seconds. Resume is unavailable.
+
+### Fix
+
+Confirm that Claude Code is version 2.1.145 or newer and that the selected authentication method is supported. Continue using the attached terminal or stop it and refresh provider health before creating another session. A later valid lifecycle event clears the warning, but only an authenticated `SessionStart` can establish the conversation ID required for resume.
 
 ## Daemon does not start
 
@@ -121,6 +162,7 @@ sylvops --version
 sylvops daemon status
 sylvops provider list
 sylvops provider probe codex
+sylvops provider probe claude
 sylvops snapshot
 sylvops doctor
 sylvops update status

@@ -27,21 +27,21 @@ The individual tools still work. The mental map becomes the problem.
 
 SylvOps does not try to replace the tools I already like. It adds durable structure around them.
 
-| Tool                        | What it is good at                                                      | What SylvOps adds beside it                                                                                                                        |
-| --------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex desktop               | Codex chats, parallel worktrees, Git review, and an integrated terminal | A separate local mission-control view for explicitly named Shell and Codex sessions, branch-oriented managed checkouts, and daemon-owned processes |
-| Cursor                      | Editing, navigating, and changing code inside an IDE                    | A place to supervise several task checkouts and terminals before opening the checkout you want in the editor                                       |
-| Windows Terminal            | Flexible shells, tabs, panes, builds, and servers                       | Task names, repository and branch context, persistent daemon ownership, and safe return to a session after leaving the UI                          |
-| Raw `git worktree` commands | Powerful, standard Git isolation                                        | Guided creation, verified identity, clean-removal checks, active-session protection, and branch preservation                                       |
+| Tool                        | What it is good at                                                      | What SylvOps adds beside it                                                                                                                                      |
+| --------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex desktop               | Codex chats, parallel worktrees, Git review, and an integrated terminal | A separate local mission-control view for explicitly named Shell, Codex, and Claude Code sessions, branch-oriented managed checkouts, and daemon-owned processes |
+| Cursor                      | Editing, navigating, and changing code inside an IDE                    | A place to supervise several task checkouts and terminals before opening the checkout you want in the editor                                                     |
+| Windows Terminal            | Flexible shells, tabs, panes, builds, and servers                       | Task names, repository and branch context, persistent daemon ownership, and safe return to a session after leaving the UI                                        |
+| Raw `git worktree` commands | Powerful, standard Git isolation                                        | Guided creation, verified identity, clean-removal checks, active-session protection, and branch preservation                                                     |
 
-Codex desktop also supports parallel worktrees; the [official OpenAI documentation](https://learn.chatgpt.com/docs/environments/git-worktrees) explains that workflow. SylvOps is useful when I specifically want its repository → checkout → session hierarchy, a Shell-first option beside Codex, and conservative worktree lifecycle rules in a standalone local tool.
+Codex desktop also supports parallel worktrees; the [official OpenAI documentation](https://learn.chatgpt.com/docs/environments/git-worktrees) explains that workflow. SylvOps is useful when I specifically want its repository → checkout → session hierarchy, a Shell-first option beside Codex and Claude Code, and conservative worktree lifecycle rules in a standalone local tool.
 
 ## A concrete example
 
 Imagine I am working on one repository with three tasks:
 
 1. **Add a settings screen** on `feature/settings-screen` with a Codex session.
-2. **Fix session reconnect** on `fix/session-reconnect` with another Codex session.
+2. **Fix session reconnect** on `fix/session-reconnect` with a Claude Code session.
 3. **Run the development server and tests** in a Shell session for the branch I am reviewing.
 
 Without a coordination layer, I may have two app conversations, several editor windows, and three terminal tabs. I have to remember which directory each one uses, whether the branch is clean, and which process should keep running.
@@ -54,7 +54,7 @@ Product workspace
    ├─ Settings screen · feature/settings-screen
    │  └─ Codex · Settings UI
    ├─ Session reconnect · fix/session-reconnect
-   │  └─ Codex · Reconnect fix
+   │  └─ Claude Code · Reconnect fix
    └─ Root checkout · main
       └─ Shell · Review and tests
 ```
@@ -81,7 +81,7 @@ Repositories, state, worktrees, and processes remain on the computer. Clients co
 
 ### Existing tools still fit
 
-Use Codex for Codex work. Open a checkout in Cursor when you want IDE editing. Use Windows Terminal for an external shell when that is more convenient. SylvOps is the map and process owner, not a demand to abandon everything else.
+Use Codex or Claude Code for agent work. Open a checkout in Cursor when you want IDE editing. Use Windows Terminal for an external shell when that is more convenient. SylvOps is the map and process owner, not a demand to abandon everything else.
 
 ## Why I use it
 
