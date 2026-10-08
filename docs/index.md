@@ -7,6 +7,11 @@ aside: false
 pageClass: home-page-shell
 ---
 
+<script setup lang="ts">
+import sessionTerminalScreenshot from "./assets/screenshots/sylvops-session-terminal.png";
+import settingsScreenshot from "./assets/screenshots/sylvops-settings.png";
+</script>
+
 <main class="home-page">
   <section class="home-intro">
     <div>
@@ -32,14 +37,14 @@ pageClass: home-page-shell
     </div>
     <div class="product-preview-grid">
       <figure class="product-shot product-shot-wide">
-        <a href="./assets/screenshots/sylvops-session-terminal.png" aria-label="Open the full SylvOps session and terminal screenshot">
-          <img src="./assets/screenshots/sylvops-session-terminal.png" alt="SylvOps desktop showing repositories, checkouts, sessions, and an active Codex terminal" loading="eager">
+        <a :href="sessionTerminalScreenshot" aria-label="Open the full SylvOps session and terminal screenshot">
+          <img :src="sessionTerminalScreenshot" alt="SylvOps desktop showing repositories, checkouts, sessions, and an active Codex terminal" loading="eager">
         </a>
         <figcaption>Move from repository to checkout to a running session without losing the task context.</figcaption>
       </figure>
       <figure class="product-shot">
-        <a href="./assets/screenshots/sylvops-settings.png" aria-label="Open the full SylvOps settings screenshot">
-          <img src="./assets/screenshots/sylvops-settings.png" alt="SylvOps settings with theme, density, terminal font, cursor, and update controls" loading="lazy">
+        <a :href="settingsScreenshot" aria-label="Open the full SylvOps settings screenshot">
+          <img :src="settingsScreenshot" alt="SylvOps settings with theme, density, terminal font, cursor, and update controls" loading="lazy">
         </a>
         <figcaption>Choose a theme and tune the terminal without leaving the workspace.</figcaption>
       </figure>
