@@ -8,8 +8,27 @@ pageClass: home-page-shell
 ---
 
 <script setup lang="ts">
+import { ref } from "vue";
 import sessionTerminalScreenshot from "./assets/screenshots/sylvops-session-terminal.png";
 import settingsScreenshot from "./assets/screenshots/sylvops-settings.png";
+
+const sessionTerminalAlt =
+  "SylvOps desktop showing repositories, checkouts, sessions, and an active Codex terminal";
+const settingsAlt =
+  "SylvOps settings with theme, density, terminal font, cursor, and update controls";
+const lightbox = ref<HTMLDialogElement | null>(null);
+const lightboxImage = ref(sessionTerminalScreenshot);
+const lightboxAlt = ref(sessionTerminalAlt);
+
+function openScreenshot(src: string, alt: string) {
+  lightboxImage.value = src;
+  lightboxAlt.value = alt;
+  lightbox.value?.showModal();
+}
+
+function closeScreenshot() {
+  lightbox.value?.close();
+}
 </script>
 
 <main class="home-page">
@@ -37,18 +56,23 @@ import settingsScreenshot from "./assets/screenshots/sylvops-settings.png";
     </div>
     <div class="product-preview-grid">
       <figure class="product-shot product-shot-wide">
-        <a :href="sessionTerminalScreenshot" aria-label="Open the full SylvOps session and terminal screenshot">
-          <img :src="sessionTerminalScreenshot" alt="SylvOps desktop showing repositories, checkouts, sessions, and an active Codex terminal" loading="eager">
-        </a>
+        <button class="product-shot-trigger" type="button" aria-label="Open the full SylvOps session and terminal screenshot" @click="openScreenshot(sessionTerminalScreenshot, sessionTerminalAlt)">
+          <img :src="sessionTerminalScreenshot" :alt="sessionTerminalAlt" loading="eager">
+        </button>
         <figcaption>Move from repository to checkout to a running session without losing the task context.</figcaption>
       </figure>
       <figure class="product-shot">
-        <a :href="settingsScreenshot" aria-label="Open the full SylvOps settings screenshot">
-          <img :src="settingsScreenshot" alt="SylvOps settings with theme, density, terminal font, cursor, and update controls" loading="lazy">
-        </a>
+        <button class="product-shot-trigger" type="button" aria-label="Open the full SylvOps settings screenshot" @click="openScreenshot(settingsScreenshot, settingsAlt)">
+          <img :src="settingsScreenshot" :alt="settingsAlt" loading="lazy">
+        </button>
         <figcaption>Choose a theme and tune the terminal without leaving the workspace.</figcaption>
       </figure>
     </div>
+    <dialog ref="lightbox" class="product-lightbox" @click.self="closeScreenshot">
+      <button class="product-lightbox-close" type="button" aria-label="Close full-size screenshot" @click="closeScreenshot">×</button>
+      <img :src="lightboxImage" :alt="lightboxAlt">
+      <p>Press Esc to close</p>
+    </dialog>
   </section>
 
   <section class="why-panel" aria-labelledby="why-sylvops-heading">
