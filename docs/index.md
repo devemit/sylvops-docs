@@ -22,6 +22,30 @@ pageClass: home-page-shell
     <HomeMark />
   </section>
 
+  <section class="product-preview" aria-labelledby="product-preview-heading">
+    <div class="product-preview-heading">
+      <div>
+        <p class="eyebrow">See it before you install it</p>
+        <h2 id="product-preview-heading">One view for checkouts, sessions, and terminals.</h2>
+      </div>
+      <p>The desktop keeps the active repository, branch, checkout, and session visible while you work.</p>
+    </div>
+    <div class="product-preview-grid">
+      <figure class="product-shot product-shot-wide">
+        <a href="./assets/screenshots/sylvops-session-terminal.png" aria-label="Open the full SylvOps session and terminal screenshot">
+          <img src="./assets/screenshots/sylvops-session-terminal.png" alt="SylvOps desktop showing repositories, checkouts, sessions, and an active Codex terminal" loading="eager">
+        </a>
+        <figcaption>Move from repository to checkout to a running session without losing the task context.</figcaption>
+      </figure>
+      <figure class="product-shot">
+        <a href="./assets/screenshots/sylvops-settings.png" aria-label="Open the full SylvOps settings screenshot">
+          <img src="./assets/screenshots/sylvops-settings.png" alt="SylvOps settings with theme, density, terminal font, cursor, and update controls" loading="lazy">
+        </a>
+        <figcaption>Choose a theme and tune the terminal without leaving the workspace.</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <section class="why-panel" aria-labelledby="why-sylvops-heading">
     <div>
       <p class="eyebrow">Why another developer tool?</p>
