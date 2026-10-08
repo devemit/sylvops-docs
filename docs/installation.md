@@ -22,9 +22,20 @@ The preview is not an official signed application release. Windows may identify 
 
 ## Windows preview
 
+Choose one installation method:
+
+1. **PowerShell installer script (recommended):** downloads, verifies, and installs the preview for you.
+2. **Manual Windows archive:** you download the ZIP and checksum file, verify them, and extract the application yourself.
+
+### Recommended PowerShell installation
+
 The installer script downloads the preview ZIP and `SHA256SUMS`, verifies the archive, and copies `sylvops.exe` to `%LOCALAPPDATA%\SylvOps\bin`. Download the tagged script first so you can inspect it before running it:
 
 <PreviewInstallCommand platform="windows" />
+
+::: tip Using the installer script?
+You do not need to download the ZIP or `SHA256SUMS` yourself. The script downloads and verifies both. Download those files manually only when following the manual archive instructions below.
+:::
 
 Launch the installed executable explicitly:
 
@@ -36,7 +47,11 @@ The preview does not create a Start Menu entry, Windows uninstall registration, 
 
 ### Manual Windows archive
 
-Download <DownloadLink asset="windowsZip" label="the Windows x86_64 ZIP" /> and <DownloadLink asset="checksums" label="SHA256SUMS" /> into the same directory, then verify and extract:
+Use this method instead of the installer script when you want a portable copy or prefer to verify and extract the files yourself.
+
+Download both <DownloadLink asset="windowsZip" label="the Windows x86_64 ZIP" /> and <DownloadLink asset="checksums" label="SHA256SUMS" /> into the same directory. `SHA256SUMS` contains the published checksum used to confirm that the ZIP was downloaded correctly.
+
+Verify the ZIP before extracting or running it:
 
 ```powershell
 $archive = 'sylvops-windows-x86_64.zip'
