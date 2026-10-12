@@ -53,6 +53,14 @@ For the current preview:
 - **Debian package:** run `sudo apt remove sylvops`.
 - **AppImage:** remove the AppImage file.
 
+## Targeted removal
+
+SylvOps uses a leaf-first policy for removing individual entities. A live Session must be stopped before its record can be deleted, a Project must have no Sessions or active managed Worktrees before it can be removed, and a Workspace must be empty before it can be deleted.
+
+Deleting a Session removes only retained SylvOps Session state. Removing a Project unregisters it without changing its repository. Deleting a Workspace removes only the empty organizational group. Only the separately guarded Remove Worktree operation may delete a working directory, and it preserves the Git branch.
+
+Each action uses daemon inspection, explicit confirmation, and immediate state revalidation. Removal does not cascade and has no undo.
+
 ## Remove SylvOps user data
 
 Use the desktop action under **Settings → Safety**, or run:

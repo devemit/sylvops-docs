@@ -36,6 +36,12 @@ sylvops [--state-dir <DIRECTORY>] [COMMAND]
 
 Provider options explicitly create or reuse a session in the root checkout. Opening SylvOps without provider flags never launches an agent implicitly.
 
+### TUI essentials
+
+The TUI shows the active Workspace → Project → Worktree → Session hierarchy. Use `Tab` to switch between the explorer and main area, the arrow keys to navigate, and `1`, `2`, or `3` to open Terminal, Changes, or Details.
+
+Press `d` on the selected entity to inspect its contextual action: Stop Session for a live Session, Delete Session for an inactive Session, Remove Worktree, Remove Project, or Delete Workspace. SylvOps shows the exact effect or an actionable refusal. Press `y` only after reviewing the confirmation.
+
 ## Daemon
 
 ```text
@@ -54,17 +60,19 @@ sylvops daemon stop
 
 ```text
 sylvops workspace add <NAME>
+sylvops workspace delete <WORKSPACE_ID> --confirm
 ```
 
-Creates a workspace and returns its ID.
+`add` creates a workspace and returns its ID. `delete` removes only an empty Workspace group; it never deletes repositories, Worktrees, branches, or files.
 
 ## Project (repository)
 
 ```text
 sylvops project add --workspace <WORKSPACE_ID> <REPOSITORY_PATH>
+sylvops project remove <PROJECT_ID> --confirm
 ```
 
-Registers an existing Git repository and its root checkout.
+`add` registers an existing Git repository and its root checkout. `remove` requires the Project to have no Sessions or active managed Worktrees, then unregisters it without changing the repository or any Git data.
 
 ## Worktree (checkout)
 
@@ -97,9 +105,25 @@ sylvops session create \
 sylvops session attach <SESSION_ID>
 sylvops session resume <SESSION_ID> [--columns <NUMBER>] [--rows <NUMBER>]
 sylvops session stop <SESSION_ID>
+sylvops session delete <SESSION_ID> --confirm
 ```
 
 Defaults are Shell, 80 columns, and 24 rows. While attached from the CLI, press `Ctrl+]` to detach without stopping the process.
+
+`stop` ends a live Session's process tree but retains its record. `delete` removes an inactive Session's retained SylvOps state while preserving its Worktree and files.
+
+## Leaf-first removal
+
+Removal never cascades through remaining child entities. Every command inspects current daemon state, requires explicit confirmation, and revalidates the target before changing anything.
+
+| Operation        | Requirement                                                    | Filesystem effect                                                                                  |
+| ---------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Delete Session   | Session is inactive with no owned process tree                 | Removes retained SylvOps Session state; preserves the Worktree and files                           |
+| Remove Project   | No Sessions or active managed non-root Worktrees remain        | Unregisters the Project; preserves the repository, root checkout, branches, and external Worktrees |
+| Remove Worktree  | Clean active managed non-root Worktree with no active Sessions | Removes that managed working directory; preserves its Git branch                                   |
+| Delete Workspace | Workspace contains no Projects                                 | Removes only the empty organizational group                                                        |
+
+There is no undo. A refusal names the Session, child entity, or Git state that must be resolved first.
 
 ## Provider
 

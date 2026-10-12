@@ -82,6 +82,26 @@ Removal uses non-forced `git worktree remove`. SylvOps never recursively deletes
 Removing a managed checkout removes the working directory registration, not its Git branch. Commits on the branch remain in the repository.
 :::
 
+## Remove retained SylvOps state
+
+SylvOps uses leaf-first removal for obsolete Sessions, registered repositories, and empty Workspaces. These operations do not cascade:
+
+1. Stop a live Session, then delete its inactive record.
+2. Remove every Session and active managed checkout before unregistering a repository.
+3. Remove every repository before deleting a Workspace.
+
+Only managed-checkout removal deletes a working directory. Deleting a Session preserves its checkout and files, removing a repository preserves all Git content, and deleting an empty Workspace affects only the SylvOps group.
+
+Use the selected entity's trash action in the desktop, press `d` and then confirm with `y` in the TUI, or use the explicit CLI commands:
+
+```text
+sylvops session delete <SESSION_ID> --confirm
+sylvops project remove <PROJECT_ID> --confirm
+sylvops workspace delete <WORKSPACE_ID> --confirm
+```
+
+Every operation is inspected and revalidated by the daemon. Blocked actions explain which child, running process, or checkout condition must be cleared first.
+
 ## Operations that remain manual
 
 Use Git yourself to:

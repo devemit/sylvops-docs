@@ -19,6 +19,13 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
+### What changed in preview.5
+
+- Added safe leaf-first removal for inactive Sessions, cleared Projects, managed Worktrees, and empty Workspaces across the desktop, TUI, and CLI.
+- Added explicit confirmations, actionable blocker messages, and filesystem-preservation explanations for every removal action.
+- Improved desktop path readability, navigator stability, action sizing, and accessibility for contextual removal controls.
+- Reduced terminal input and rendering latency while preserving ordered, lossless input and daemon-owned output.
+
 ## Update a preview manually
 
 Preview update discovery fails closed. To upgrade:
