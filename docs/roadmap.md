@@ -12,10 +12,10 @@ These items are not available in the current public preview. Do not rely on them
 ## Git and hosting workflows
 
 - Explicit import of externally created Git worktrees
-- GitHub integration
+- GitHub Issue mutations such as assigning, labeling, commenting, or closing
+- Pull Request checkout, creation, review, and merge workflows
 - Commit actions
 - Push actions
-- Pull-request creation and management
 - Rich commit and branch history tools
 
 ## Navigation and discovery

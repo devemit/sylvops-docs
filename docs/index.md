@@ -98,9 +98,9 @@ function closeScreenshot() {
       <a href="./working-with-git">Worktree workflow</a>
     </article>
     <article class="home-card">
-      <h2>Preview availability</h2>
-      <p>Windows x86_64 and Linux x86_64 packages are available as a free unsigned testing preview.</p>
-      <a href="./installation">Choose a package</a>
+      <h2>From Issue to checkout</h2>
+      <p>Browse GitHub work and start an isolated Codex session from an Issue without storing credentials or remote content.</p>
+      <a href="./github">GitHub workflow</a>
     </article>
   </section>
 </main>

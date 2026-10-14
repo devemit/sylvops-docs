@@ -148,4 +148,4 @@ SylvOps does not install or update provider CLIs, initiate login, repair credent
 
 ## Not included
 
-Claude cloud sessions, background-agent management, Remote Control, plugins, and enterprise authentication are not part of the current Claude Code provider. GitHub, Cursor, Pi, and remote providers are also not current public features.
+Claude cloud sessions, background-agent management, Remote Control, plugins, and enterprise authentication are not part of the current Claude Code provider. Cursor, Pi, and remote providers are also not current public features. GitHub is a separate read-only integration rather than a Provider; see [GitHub Issues and Pull Requests](./github).

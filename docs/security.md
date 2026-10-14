@@ -36,6 +36,14 @@ Provider launches receive a reviewed environment that retains the provider's sup
 
 Claude Code launches also receive an application-owned settings layer and per-session hook credential. The layer contains no provider credentials, preserves the effective user, project, and organization settings, and is removed when the daemon exits. Its hooks observe bounded lifecycle events; they cannot approve permissions, answer prompts, change permission mode, or rewrite Claude activity.
 
+## GitHub access
+
+SylvOps uses an already installed and authenticated native GitHub CLI. It never initiates login, stores GitHub credentials, or forwards `GH_TOKEN` or `GITHUB_TOKEN`. Project association is limited to validated remotes already configured in the repository.
+
+Remote titles, bodies, comments, and diagnostics are bounded untrusted input. Open in browser accepts a typed item identity, and the daemon reconstructs the canonical HTTPS target only after an explicit user action.
+
+GitHub results, bodies, comments, filters, generated prompts, and additional instructions remain in memory only. Persistence is limited to the selected repository identity and the Issue Work Source attached to an Issue-created Worktree.
+
 ## Repository and provider output
 
 Git and provider processes are invoked with executable paths and structured argument arrays, never concatenated shell command strings. External commands use time and output limits. Terminal escape sequences are parsed as data rather than forwarded blindly to the host terminal.

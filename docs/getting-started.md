@@ -111,8 +111,16 @@ Select the session and choose **Open terminal**. The daemon owns the process, so
 
 Choose **Stop** only when you want SylvOps to terminate the session and its complete process tree.
 
+## 10. Optionally connect GitHub
+
+Install and authenticate GitHub CLI outside SylvOps, select a Project, and associate it with one of that repository's validated GitHub remotes. The desktop and TUI can then browse Issues and Pull Requests. Start Work on an Issue can create an isolated Worktree and Codex Session while retaining the Issue as its Work Source.
+
+See [GitHub Issues and Pull Requests](./github) for setup, client controls, recovery behavior, and security boundaries.
+
 ## Next steps
 
 - Learn [how Git worktrees behave](./working-with-git).
 - Run [several agents safely](./multiple-agents).
+- Use the [keyboard-first terminal client](./tui).
+- Connect a Project to [GitHub Issues and Pull Requests](./github).
 - Review [provider setup and troubleshooting](./providers).

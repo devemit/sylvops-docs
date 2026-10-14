@@ -53,9 +53,9 @@ git diff
 git log --oneline --decorate -10
 ```
 
-## Commit and share work manually
+## Commit and publish changes manually
 
-SylvOps does not currently provide commit, push, merge, pull-request, or GitHub buttons. Use Git deliberately:
+SylvOps can browse GitHub Issues and Pull Requests and start isolated Codex work from an Issue, but it does not commit, push, merge, rebase, or create and review Pull Requests. Use Git deliberately:
 
 ```sh
 git add path/to/file
@@ -63,7 +63,7 @@ git commit -m "feat: describe the change"
 git push -u origin HEAD
 ```
 
-Create and merge pull requests using your normal Git hosting workflow.
+Create, review, and merge Pull Requests using your normal Git hosting workflow. See [GitHub Issues and Pull Requests](./github) for the read-only browsing and Issue Start Work features.
 
 ## Remove a clean managed checkout
 

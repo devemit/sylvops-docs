@@ -33,6 +33,14 @@ A branch names a line of Git history. Creating a managed checkout creates and ch
 
 SylvOps currently does not commit, push, merge, rebase, or create pull requests for you.
 
+## GitHub Repository association
+
+A Project can be explicitly associated with one validated GitHub remote already configured in its repository. This enables bounded read-only Issue and Pull Request browsing without changing Git remotes or storing GitHub credentials.
+
+## Work Source
+
+A managed Worktree created through GitHub Issue Start Work records that Issue as its Work Source. Sessions in the Worktree inherit the source, so the desktop and TUI can show why the work exists and return to the Issue. SylvOps stores only the bounded Issue identity and canonical URL, not remote bodies, comments, or generated prompts.
+
 ## Session
 
 A session is one interactive process running inside a checkout. It can use the Shell, Codex, or Claude Code provider. The daemon—not the desktop window—owns its PTY and complete process tree.

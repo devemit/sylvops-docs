@@ -138,6 +138,20 @@ sylvops provider probe claude
 
 Claude Code requires version 2.1.145 or newer and supported first-party authentication. For Codex and Claude Code, `--model`, `--effort`, and `--prompt` are advanced CLI-only creation options. Claude effort accepts `low`, `medium`, `high`, `xhigh`, or `max`.
 
+## GitHub
+
+GitHub commands use the daemon's bounded, read-only integration with an already authenticated `gh` CLI:
+
+```text
+sylvops github status [--project <PROJECT_ID>]
+sylvops github list --project <PROJECT_ID> [--kind <issue|pull-request>] [--state <open|closed|all>] [--refresh]
+sylvops github view --project <PROJECT_ID> [--kind <issue|pull-request>] <NUMBER> [--refresh]
+```
+
+`status` reports redacted connection health, validated remotes, and the selected Project association. `list` and `view` return bounded JSON and support filters, cursor pagination, comment pagination, and explicit cache bypass. Use each command's `--help` output for the complete options.
+
+The CLI does not mutate GitHub. Guided Issue Start Work is available in the desktop and TUI. See [GitHub Issues and Pull Requests](./github).
+
 ## Updates
 
 ```text
