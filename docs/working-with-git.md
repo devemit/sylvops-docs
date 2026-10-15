@@ -43,7 +43,7 @@ This makes it clear which agent owns which files and where its changes should be
 
 ## View changes
 
-Choose the **Changes** view for a bounded, read-only unified diff. SylvOps also refreshes tracked, untracked, and ignored file counts for worktree status.
+Choose the **Changes** view for a bounded, read-only unified diff. File headers, hunks, additions, deletions, context, and notices use distinct theme-aware styles. The desktop preserves long lines and provides horizontal and vertical scrollbars; the TUI supports arrow keys, `j`/`k`, Page Up/Page Down, and the mouse wheel. SylvOps also refreshes tracked, untracked, and ignored file counts for worktree status.
 
 For Git operations beyond the built-in view, use the embedded shell or another Git client:
 
