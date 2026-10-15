@@ -109,6 +109,8 @@ Advanced Codex and Claude Code model, effort, and initial-prompt options are ava
 
 Select the session and choose **Open terminal**. The daemon owns the process, so you can choose **Leave terminal** or close the desktop without stopping it. Reopen SylvOps later and attach again.
 
+In the desktop terminal, `Enter` sends carriage return to submit, while `Shift+Enter` sends line feed for terminal applications that distinguish a newline.
+
 Choose **Stop** only when you want SylvOps to terminate the session and its complete process tree.
 
 ## 10. Optionally connect GitHub

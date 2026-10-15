@@ -17,10 +17,12 @@ The TUI connects to the same local daemon and uses the same Workspace → Projec
 
 - `Tab` switches between the Explorer and main area.
 - Arrow keys navigate and expand or collapse the hierarchy.
-- `1`, `2`, and `3` open Terminal, Changes, and Details.
-- `4` opens the Active Sessions overview.
+- `e` and `a` switch the navigator between Explorer and Active Sessions.
+- `Alt+Left` and `Alt+Right`, or dragging the divider, resize the navigator.
+- `1`, `2`, and `3` open Terminal, Changes, and Details in the main area.
 - `Enter` explicitly opens the selected Session terminal.
 - `Ctrl+]` leaves an attached terminal without stopping its process.
+- `w` opens New Worktree for the Project that owns the selected Project, Worktree, or Session.
 - `/` searches commands and entities outside modal-specific workflows.
 
 The header and footer stay compact. Their labels and shortcuts change with the focused pane or active mode so unavailable actions are not advertised.
@@ -38,17 +40,21 @@ Press `s`, choose Settings in the header, or open Settings from the command pale
 
 Choose Comfortable or Compact density and Cards or List for the Active Sessions view. Changes preview immediately. Apply persists them through daemon-backed TUI state; Cancel or `Escape` restores the complete prior appearance. TUI preferences remain separate from desktop preferences and never rewrite provider-owned terminal colors.
 
-## Supervise active Sessions
+## Switch between Explorer and Active Sessions
 
-Press `4` to see Starting, Running, and Needs feedback Sessions across the open Workspace. Needs feedback sorts first, followed by Running and Starting, with recent activity breaking ties.
+Press `e` for the hierarchy or `a` to see Starting, Running, and Needs feedback Sessions across the open Workspace. These are navigator views beside the Terminal, Changes, or Details main view rather than a fourth main tab. Needs feedback sorts first, followed by Running and Starting, with recent activity breaking ties.
 
-Cards are the default and use two columns only when the terminal is wide enough. List presents the same information in one column. Moving selection does not attach; press `Enter` or choose Open terminal explicitly. When a Session is no longer active, it leaves this overview but remains available as retained history in the Explorer.
+Cards are the default and use two columns only when the navigator is wide enough. List presents the same information in one column. Moving selection does not attach; press `Enter` or choose Open terminal explicitly. When a Session is no longer active, it leaves Active Sessions but remains available as retained history in the Explorer.
+
+The selected navigator view and width persist between runs. Width is bounded to 24–80 columns. On narrow terminals, `Tab` switches the full screen between Navigator and Main.
+
+Terminal sizing follows the actual rendered main panel, including the current navigator width and optional attention banner. Provider-owned terminal content is not soft-wrapped by the surrounding application panel, and the banner does not hide the final terminal row.
 
 ## Browse for a repository
 
 The Add Project form includes a directory browser that starts from the directory where the TUI was launched. Browse children, Parent, Home, Unix roots, or Windows drives; type to filter visible directory names; and select the current directory when appropriate.
 
-Hidden directories are omitted initially and toggled with `h`. Directory links and Windows reparse points are distinguished, filesystem errors remain recoverable, and large listings are bounded. Choosing a directory returns its absolute path to the editable form; it does not register anything until you submit. The daemon still performs final path canonicalization and Git validation.
+Hidden directories are omitted initially and toggled with `h`. Directory links and Windows reparse points are distinguished, filesystem errors remain recoverable, and large listings are bounded. On Windows, only actual logical drive roots are listed. Choosing a directory returns its absolute path to the editable form; it does not register anything until you submit. The daemon still performs final path canonicalization and Git validation.
 
 ## Use GitHub
 

@@ -38,7 +38,9 @@ Provider options explicitly create or reuse a session in the root checkout. Open
 
 ### TUI essentials
 
-The TUI shows the active Workspace → Project → Worktree → Session hierarchy. Use `Tab` to switch between the explorer and main area, the arrow keys to navigate, and `1`, `2`, or `3` to open Terminal, Changes, or Details.
+The TUI navigator switches between the Workspace → Project → Worktree → Session Explorer with `e` and the Workspace-wide Active Sessions view with `a`. Use `Tab` to switch between the navigator and main area, the arrow keys to navigate, and `1`, `2`, or `3` to open Terminal, Changes, or Details. Resize the navigator with `Alt+Left`, `Alt+Right`, or by dragging its divider.
+
+Press `w` to create a Worktree for the Project that owns the selected Project, Worktree, or Session. Contextual shortcuts are shown in the footer.
 
 Press `d` on the selected entity to inspect its contextual action: Stop Session for a live Session, Delete Session for an inactive Session, Remove Worktree, Remove Project, or Delete Workspace. SylvOps shows the exact effect or an actionable refusal. Press `y` only after reviewing the confirmation.
 

@@ -19,25 +19,25 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.6
+### What changed in preview.7
 
 **Desktop**
 
-- Connect a Project to a validated GitHub remote, then browse bounded Issue and Pull Request lists and details without an active Session.
-- Start isolated Codex work from an Issue, return to existing linked work, create an explicit parallel Worktree, and recover when Worktree creation succeeds but Session launch fails.
-- Refined selected-entity removal controls into smaller red, borderless icons with target-specific accessible names and fully textual confirmations.
+- Terminal input recovers after a rejected transport batch instead of disabling later queued input; the rejected bytes are reported and are not retried silently.
+- `Enter` sends carriage return while `Shift+Enter` sends line feed in the embedded terminal.
+- GitHub Issue navigation and Start Work actions now use separate stable rows so Open Work, Start Work, parallel Worktree, and local-status controls remain readable.
 
 **Terminal client**
 
-- Added persistent terminal-safe themes, Comfortable or Compact density, and Cards or List presentation settings independent from the desktop.
-- Added the Workspace-wide Active Sessions overview on `4`, with Needs feedback prioritized and explicit terminal attachment.
-- Added compact contextual header and footer guidance plus a keyboard-first, cross-platform Project directory browser.
-- Added the GitHub modal for Issue and Pull Request browsing and the same Issue Start Work and recovery workflow as the desktop.
+- Replaced the fourth Sessions main tab with a resizable navigator that switches between Explorer with `e` and Active Sessions with `a` while keeping Terminal, Changes, and Details visible.
+- Added persisted navigator view and width, mouse divider dragging, and `Alt+Left` or `Alt+Right` keyboard resizing.
+- Added `w` as a consistent New Worktree action from Project, Worktree, and Session contexts.
+- Consolidated contextual shortcuts into the footer and clarified Navigator/Main focus and selection styling.
+- Kept the terminal's final input row visible when the attention banner appears, prevented application-level soft wrapping, and limited Windows roots to actual drives.
 
 **Shared**
 
-- Added a daemon-owned, read-only GitHub CLI integration with explicit Project-to-remote association, bounded caching and pagination, validated browser opening, and no stored credentials or remote bodies.
-- Added `sylvops github status`, `list`, and `view` CLI commands and persistent Work Source identity for Issue-created Worktrees.
+- Persisted the TUI navigator mode and bounded width through daemon-backed state while normalizing older saved Sessions-tab state to Terminal.
 
 ## Update a preview manually
 
