@@ -19,25 +19,23 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.7
+### What changed in preview.8
 
 **Desktop**
 
-- Terminal input recovers after a rejected transport batch instead of disabling later queued input; the rejected bytes are reported and are not retried silently.
-- `Enter` sends carriage return while `Shift+Enter` sends line feed in the embedded terminal.
-- GitHub Issue navigation and Start Work actions now use separate stable rows so Open Work, Start Work, parallel Worktree, and local-status controls remain readable.
+- Changes now distinguishes file headers, hunks, additions, deletions, context, and notices with theme-aware styling.
+- Long and wide diffs preserve their original lines and can be scrolled vertically and horizontally with visible scrollbars.
 
 **Terminal client**
 
-- Replaced the fourth Sessions main tab with a resizable navigator that switches between Explorer with `e` and Active Sessions with `a` while keeping Terminal, Changes, and Details visible.
-- Added persisted navigator view and width, mouse divider dragging, and `Alt+Left` or `Alt+Right` keyboard resizing.
-- Added `w` as a consistent New Worktree action from Project, Worktree, and Session contexts.
-- Consolidated contextual shortcuts into the footer and clarified Navigator/Main focus and selection styling.
-- Kept the terminal's final input row visible when the attention banner appears, prevented application-level soft wrapping, and limited Windows roots to actual drives.
+- Attached terminals now show the provider application's cursor at its actual position when the application has not hidden it.
+- Changes uses the same semantic diff styling as the desktop and supports arrow keys, `j`/`k`, Page Up/Page Down, and the mouse wheel for bounded vertical scrolling.
+- Active Sessions List mode now uses compact one-line rows, while Cards retain provider, Project, Worktree, activity, and inline action details.
 
 **Shared**
 
-- Persisted the TUI navigator mode and bounded width through daemon-backed state while normalizing older saved Sessions-tab state to Terminal.
+- Session startup now preserves an immediate authenticated provider lifecycle event until the new process identity is persisted, preventing fast `SessionStart` hooks from being discarded.
+- Diff parsing is shared across the desktop and TUI so both clients classify the same bounded, read-only Git output consistently.
 
 ## Update a preview manually
 
