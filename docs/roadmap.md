@@ -32,7 +32,7 @@ These items are not available in the current public preview. Do not rely on them
 
 ## Coordination
 
-- Desktop notifications
+- Broader desktop operating-system notifications beyond the shipped Needs-feedback in-app alert and sound
 - More ways to surface agent attention without scraping terminal output
 
 ## Distribution

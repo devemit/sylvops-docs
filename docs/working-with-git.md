@@ -14,8 +14,12 @@ In the desktop:
 1. Select a repository.
 2. Choose **New checkout**.
 3. Enter a new branch, such as `feature/export-settings`.
-4. Choose a base ref, normally `HEAD` or an existing local branch.
+4. Choose **Latest default branch**, **Current checkout**, or **Custom local ref**.
 5. Confirm creation.
+
+**Latest default branch** is the default. SylvOps asks the selected remote which branch its `HEAD` advertises, fetches that exact branch, and pins the resulting commit before creating the checkout. It prefers `origin`, otherwise uses the only configured remote; repositories with several non-`origin` remotes require an explicit choice. A failed or moved remote does not fall back to a stale local ref.
+
+The fetch is non-interactive and does not switch, clean, reset, or otherwise rewrite the root checkout. Use **Current checkout** when the new branch should start at its current `HEAD`, or **Custom local ref** for another already available local ref.
 
 Through the CLI:
 
@@ -23,9 +27,10 @@ Through the CLI:
 sylvops worktree create \
   --project <PROJECT_ID> \
   --branch feature/export-settings \
-  --base HEAD \
   --name "Export settings"
 ```
+
+Omitting `--base` uses the latest remote default branch. Add `--remote <NAME>` to select a remote, or use `--base HEAD` (or another local ref) to avoid fetching.
 
 SylvOps validates the branch, resolves the base to a commit, disables Git hooks for the worktree-add mutation, creates an opaque destination, and verifies the resulting repository identity before recording it.
 
@@ -111,7 +116,7 @@ Every operation is inspected and revalidated by the daemon. Blocked actions expl
 Use Git yourself to:
 
 - stage and commit changes;
-- fetch, pull, and push;
+- perform general-purpose fetch, pull, and push operations beyond SylvOps's scoped latest-default-branch fetch for new checkouts;
 - merge, rebase, or cherry-pick between branches;
 - resolve conflicts;
 - create or manage pull requests;

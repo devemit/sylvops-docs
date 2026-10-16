@@ -53,11 +53,13 @@ Before changing local state, SylvOps shows and revalidates:
 - the GitHub Repository and Issue identity;
 - bounded Issue title, body, labels, assignees, and canonical URL;
 - an untrusted-content warning;
-- the root checkout's exact local base ref and commit;
+- the selected base source and exact pinned commit;
 - an editable `issue/<number>-<slug>` branch suggestion;
 - an optional Session name and separate additional instructions.
 
-Issue comments are never added to the task context. Start Work does not fetch automatically, reuse or reset an existing branch silently, or accept a stale confirmation.
+Start Work defaults to **Latest default branch**: it discovers and fetches the remote's advertised default branch, then shows the exact commit for confirmation. You can instead choose **Current checkout** or **Custom local ref**, and a changed selection must be refreshed before confirmation. If the remote branch moves after preview, SylvOps refuses the stale confirmation and asks you to refresh.
+
+Issue comments are never added to the task context. Start Work does not reuse or reset an existing branch silently, and its remote fetch does not switch or rewrite the root checkout.
 
 On success, SylvOps creates a managed Worktree, records the Issue as its Work Source, starts the Codex Session, selects the result, and opens its terminal.
 

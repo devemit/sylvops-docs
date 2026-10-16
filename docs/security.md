@@ -44,6 +44,16 @@ Remote titles, bodies, comments, and diagnostics are bounded untrusted input. Op
 
 GitHub results, bodies, comments, filters, generated prompts, and additional instructions remain in memory only. Persistence is limited to the selected repository identity and the Issue Work Source attached to an Issue-created Worktree.
 
+## Git remote access
+
+Creating a Worktree from **Latest default branch**, including through GitHub Issue Start Work, contacts an already configured Git remote and updates only the selected default branch's remote-tracking ref before local branch creation. SylvOps uses the user's existing Git or SSH authentication; it does not collect or store remote credentials.
+
+The fetch is bounded, disables Git hooks and interactive credential prompts, omits tags and submodules, and does not switch, clean, reset, or rewrite the registered root checkout. Choose **Current checkout**, **Custom local ref**, or CLI `--base` when the operation must use only local state.
+
+## Attention alerts
+
+Needs-feedback alerts are presentation-only. Alert text contains a bounded, control-character-stripped Session display name and never includes terminal or conversation content. The desktop uses an in-app message and a local system sound when available; the TUI rings the terminal bell and, on Windows, requests a quiet-time-aware notification-area popup.
+
 ## Repository and provider output
 
 Git and provider processes are invoked with executable paths and structured argument arrays, never concatenated shell command strings. External commands use time and output limits. Terminal escape sequences are parsed as data rather than forwarded blindly to the host terminal.

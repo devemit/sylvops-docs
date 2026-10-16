@@ -100,7 +100,9 @@ When Codex or Claude Code reports a verified external session ID and the source 
 sylvops session resume <SESSION_ID>
 ```
 
-Resume is guarded by the original provider and checkout identity. Claude resumes the exact verified conversation with `--resume`; SylvOps does not select Claude's continue-latest, named-session, or fork-session behavior.
+Opening an eligible inactive Session in the desktop or TUI performs this resume automatically, selects the successor history record, and attaches to its terminal. The CLI command remains explicit.
+
+Resume is guarded by the original provider and checkout identity, requires an available resume-capable provider, and is refused when a newer successor already exists. Claude resumes the exact verified conversation with `--resume`; SylvOps does not select Claude's continue-latest, named-session, or fork-session behavior. When resume is unavailable, the old history remains retained and starting a fresh Session is a separate action.
 
 ## Troubleshoot Codex
 

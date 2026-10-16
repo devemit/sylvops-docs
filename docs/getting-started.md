@@ -90,7 +90,9 @@ Every registered repository has a **root checkout**. You can work there immediat
 1. Select the repository.
 2. Choose **New checkout**.
 3. Enter a new branch name, such as `feature/settings-help`.
-4. Choose a base such as `HEAD`.
+4. Keep **Latest default branch** to fetch and pin the remote's current default branch, or explicitly choose **Current checkout** or **Custom local ref**.
+
+Latest default branch uses `origin` when present or the repository's only remote. If neither choice is unambiguous, select the remote explicitly. The fetch does not switch or rewrite your root checkout.
 
 The application calls it a **Checkout**. Git calls the same thing a **worktree**.
 
@@ -108,6 +110,8 @@ Advanced Codex and Claude Code model, effort, and initial-prompt options are ava
 ## 9. Open the embedded terminal
 
 Select the session and choose **Open terminal**. The daemon owns the process, so you can choose **Leave terminal** or close the desktop without stopping it. Reopen SylvOps later and attach again.
+
+Opening an inactive Codex or Claude Code Session with a verified resumable conversation creates one guarded successor Session and attaches to it. If the conversation is not eligible, SylvOps retains the history and asks you to start a new Session explicitly.
 
 In the desktop terminal, `Enter` sends carriage return to submit, while `Shift+Enter` sends line feed for terminal applications that distinguish a newline.
 
