@@ -149,6 +149,8 @@ sylvops worktree status <WORKTREE_ID>
 
 Commit, move, or deliberately remove every tracked change, untracked file, and ignored file using Git or normal filesystem tools. Stop sessions in the checkout, then request status and removal again.
 
+The TUI refusal dialog labels a bounded sample of tracked, untracked, and ignored paths. It can show at most 10 entries, and one entry ending in `/` can represent an entire directory, so do not assume the sample is the complete cleanup list. Nothing is deleted when the dialog appears.
+
 SylvOps will not force removal or recursively delete the directory.
 
 ## A package fails verification

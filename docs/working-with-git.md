@@ -43,7 +43,9 @@ This makes it clear which agent owns which files and where its changes should be
 
 ## View changes
 
-Choose the **Changes** view for a bounded, read-only unified diff. File headers, hunks, additions, deletions, context, and notices use distinct theme-aware styles. The desktop preserves long lines and provides horizontal and vertical scrollbars; the TUI supports arrow keys, `j`/`k`, Page Up/Page Down, and the mouse wheel. SylvOps also refreshes tracked, untracked, and ignored file counts for worktree status.
+Choose the **Changes** view for a bounded, read-only unified diff. File headers, hunk headers, additions, deletions, metadata, context, and notices use distinct theme-aware styles. The desktop preserves long lines and provides horizontal and vertical scrollbars. In the TUI, use the arrow keys, `j` and `k`, `Page Up` and `Page Down`, or the mouse wheel to scroll vertically.
+
+SylvOps also refreshes tracked, untracked, and ignored file counts for Worktree status.
 
 For Git operations beyond the built-in view, use the embedded shell or another Git client:
 
@@ -68,6 +70,8 @@ Create, review, and merge Pull Requests using your normal Git hosting workflow. 
 ## Remove a clean managed checkout
 
 Before removal, SylvOps refreshes Git's worktree list, branch and HEAD identity, and porcelain status. Removal is refused when the checkout contains tracked changes, untracked files, ignored files, an unexpected branch, or active sessions.
+
+For tracked, untracked, or ignored content, the TUI refusal dialog shows totals and a categorized sample of up to 10 display-only paths. A directory path such as `target/` can account for many entries, and the sample can be truncated. Inspect the complete Worktree yourself before moving or removing anything; SylvOps never treats the displayed paths as filesystem instructions.
 
 When it is safe:
 

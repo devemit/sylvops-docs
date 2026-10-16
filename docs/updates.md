@@ -19,22 +19,36 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.8
+### What changed in preview.9
+
+**Terminal client**
+
+- Starting and Running Sessions use an animated ring. Only Sessions in Needs feedback state enter the input-needed banner and `Shift+A` navigation, with distinct attention styling in Cards and List.
+- Attached terminals now keep bounded local history. Use the wheel or `Shift+PageUp` and `Shift+PageDown` to browse it, and `Shift+Home` or `Shift+End` to jump to the oldest or latest output. Typing returns to the live row.
+- Terminal input is delivered through an ordered, bounded queue without making rendering wait for acknowledgements. Output wakes the TUI immediately, cursor placement updates with the frame, and delivery failures explain that detaching and reattaching is required.
+- Named themes extend their background into compatible terminal padding and restore the terminal's default background on exit. Wide layouts show the running build or preview tag at the right edge of the footer.
+- A refused Worktree removal opens a scrollable explanation with categorized tracked, untracked, and ignored path samples. No content is cleaned automatically.
+
+**Shared**
+
+- Worktree status now carries a bounded, display-only sample of up to 10 blocking paths while removal continues to revalidate the complete raw Git status.
+
+### Preview.8 changes included in preview.9
 
 **Desktop**
 
-- Changes now distinguishes file headers, hunks, additions, deletions, context, and notices with theme-aware styling.
+- Changes distinguishes file headers, hunks, additions, deletions, context, and notices with theme-aware styling.
 - Long and wide diffs preserve their original lines and can be scrolled vertically and horizontally with visible scrollbars.
 
 **Terminal client**
 
-- Attached terminals now show the provider application's cursor at its actual position when the application has not hidden it.
+- Attached terminals show the provider application's cursor at its actual position when the application has not hidden it.
 - Changes uses the same semantic diff styling as the desktop and supports arrow keys, `j`/`k`, Page Up/Page Down, and the mouse wheel for bounded vertical scrolling.
-- Active Sessions List mode now uses compact one-line rows, while Cards retain provider, Project, Worktree, activity, and inline action details.
+- Active Sessions List mode uses compact one-line rows, while Cards retain provider, Project, Worktree, activity, and inline action details.
 
 **Shared**
 
-- Session startup now preserves an immediate authenticated provider lifecycle event until the new process identity is persisted, preventing fast `SessionStart` hooks from being discarded.
+- Session startup preserves an immediate authenticated provider lifecycle event until the new process identity is persisted, preventing fast `SessionStart` hooks from being discarded.
 - Diff parsing is shared across the desktop and TUI so both clients classify the same bounded, read-only Git output consistently.
 
 ## Update a preview manually

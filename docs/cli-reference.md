@@ -44,7 +44,9 @@ In Changes, scroll the bounded, read-only diff with the arrow keys, `j`/`k`, Pag
 
 Press `w` to create a Worktree for the Project that owns the selected Project, Worktree, or Session. Contextual shortcuts are shown in the footer.
 
-Press `d` on the selected entity to inspect its contextual action: Stop Session for a live Session, Delete Session for an inactive Session, Remove Worktree, Remove Project, or Delete Workspace. SylvOps shows the exact effect or an actionable refusal. Press `y` only after reviewing the confirmation.
+While attached, use the wheel or `Shift+PageUp` and `Shift+PageDown` for bounded terminal history, and `Shift+Home` or `Shift+End` for the oldest or latest output. The Changes view uses semantic diff styling and scrolls with arrows, `j`/`k`, `Page Up`/`Page Down`, or the wheel.
+
+Press `d` on the selected entity to inspect its contextual action: Stop Session for a live Session, Delete Session for an inactive Session, Remove Worktree, Remove Project, or Delete Workspace. SylvOps shows the exact effect or an actionable refusal. A Worktree refusal can include a bounded categorized path sample; it does not delete anything. Press `y` only after reviewing an eligible removal confirmation.
 
 ## Daemon
 
