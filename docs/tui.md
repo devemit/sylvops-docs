@@ -51,6 +51,8 @@ Cards are the default and show provider, Project, Worktree, recent activity, and
 
 Starting and Running use an animated ring. A Session waiting for input uses a distinct attention surface in both Cards and List. Only Needs feedback Sessions appear in the input-needed banner and `Shift+A` navigation; Running, failed, and finished Sessions are not counted as requiring input.
 
+When a Session newly enters Needs feedback, the TUI rings the terminal bell. On Windows it also requests a popup that respects quiet time. Each transition alerts once, existing Needs feedback state at startup is not replayed, and notification text contains only bounded Session labels rather than provider terminal content.
+
 The selected navigator view and width persist between runs. Width is bounded to 24–80 columns. On narrow terminals, `Tab` switches the full screen between Navigator and Main.
 
 Terminal sizing follows the actual rendered main panel, including the current navigator width and optional attention banner. Provider-owned terminal content is not soft-wrapped by the surrounding application panel, and the banner does not hide the final terminal row. While attached, the TUI renders the provider application's visible cursor at its reported position.
@@ -65,7 +67,13 @@ Use the arrow keys, `j` and `k`, Page Up and Page Down, or the mouse wheel to sc
 
 The TUI displays the provider cursor when the attached terminal has not hidden it. Input is delivered in order through a bounded queue without holding up screen updates while acknowledgements are pending. New output wakes the interface immediately. If input becomes congested or delivery fails, the TUI reports it explicitly and requires you to detach and reattach before typing again; it does not silently replay failed input.
 
-While attached, use the wheel or `Shift+PageUp` and `Shift+PageDown` to inspect bounded local history. `Shift+Home` jumps to the oldest retained output and `Shift+End` returns to the live row. Typing also returns to the live row. When a full-screen provider explicitly requests mouse input, controller attachments forward bounded wheel events to that application instead; click and drag forwarding remain unavailable.
+While attached, use the wheel, `Shift+PageUp` and `Shift+PageDown`, or the clickable **Older** and **Newer** footer controls. On the normal screen, these inspect bounded local history unless the provider requested mouse reporting. In a full-screen application, a controller forwards the requested wheel events or Page Up/Page Down when mouse reporting is unavailable. `Shift+Home` jumps to the oldest retained local output and `Shift+End` returns to the live row. Typing also returns to the live row. Observer attachments can inspect local history but cannot send scrolling input to the provider; click and drag forwarding remain unavailable.
+
+The active screen and supported input modes survive reattachment and output-gap recovery, so provider scrolling continues to route correctly after reconnecting.
+
+## Resume a stopped conversation
+
+Select an inactive Codex or Claude Code Session with a verified resumable conversation and press `Enter` or choose **Open terminal**. The TUI creates the guarded successor asynchronously, selects it, and attaches when ready. If the provider is unavailable, the saved conversation is unverified, or a newer successor already exists, history remains available and the TUI asks you to create a fresh Session explicitly.
 
 ## Browse for a repository
 

@@ -44,7 +44,7 @@ In Changes, scroll the bounded, read-only diff with the arrow keys, `j`/`k`, Pag
 
 Press `w` to create a Worktree for the Project that owns the selected Project, Worktree, or Session. Contextual shortcuts are shown in the footer.
 
-While attached, use the wheel or `Shift+PageUp` and `Shift+PageDown` for bounded terminal history, and `Shift+Home` or `Shift+End` for the oldest or latest output. The Changes view uses semantic diff styling and scrolls with arrows, `j`/`k`, `Page Up`/`Page Down`, or the wheel.
+While attached, use the wheel, `Shift+PageUp` and `Shift+PageDown`, or the clickable **Older** and **Newer** controls. Normal-screen history scrolls locally; a full-screen application receives its requested mouse wheel input or Page Up/Page Down fallback. `Shift+Home` and `Shift+End` move to the oldest or latest local output. The Changes view uses semantic diff styling and scrolls with arrows, `j`/`k`, `Page Up`/`Page Down`, or the wheel.
 
 Press `d` on the selected entity to inspect its contextual action: Stop Session for a live Session, Delete Session for an inactive Session, Remove Worktree, Remove Project, or Delete Workspace. SylvOps shows the exact effect or an actionable refusal. A Worktree refusal can include a bounded categorized path sample; it does not delete anything. Press `y` only after reviewing an eligible removal confirmation.
 
@@ -87,11 +87,14 @@ sylvops worktree create \
   --project <PROJECT_ID> \
   --branch <NEW_BRANCH> \
   [--base <REF>] \
+  [--remote <REMOTE>] \
   [--name <DISPLAY_NAME>]
 
 sylvops worktree status <WORKTREE_ID>
 sylvops worktree remove <WORKTREE_ID> --confirm
 ```
+
+Without `--base`, `create` fetches and pins the selected remote's advertised default branch. `--remote` selects that remote and conflicts with `--base`; when omitted, SylvOps uses `origin` or the repository's only remote. `--base` explicitly selects a local ref such as `HEAD` and performs no fetch.
 
 `status` refreshes tracked, untracked, and ignored state. `remove` succeeds only after exact clean-state verification and preserves the branch.
 
@@ -117,6 +120,8 @@ sylvops session delete <SESSION_ID> --confirm
 Defaults are Shell, 80 columns, and 24 rows. While attached from the CLI, press `Ctrl+]` to detach without stopping the process.
 
 `stop` ends a live Session's process tree but retains its record. `delete` removes an inactive Session's retained SylvOps state while preserving its Worktree and files.
+
+In the desktop and TUI, opening an eligible inactive Codex or Claude Code Session automatically creates its one allowed successor and attaches to it. The explicit CLI `resume` command remains available for scripts and manual control.
 
 ## Leaf-first removal
 

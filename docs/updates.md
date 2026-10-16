@@ -19,7 +19,25 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.9
+### What changed in preview.10
+
+**Desktop**
+
+- Starting and Running Sessions use an animated ring. Sessions that newly enter Needs feedback are highlighted, named in a bounded in-app alert, and play the platform's attention sound when available.
+- Opening an inactive, resumable Codex or Claude Code Session now creates its guarded successor and attaches to the new terminal automatically.
+
+**Terminal client**
+
+- A Session that newly enters Needs feedback rings the terminal bell. On Windows, the TUI also requests a quiet-time-aware popup notification; notifications contain only bounded Session labels, never provider terminal contents.
+- Attached terminals add clickable **Older** and **Newer** controls. Wheel input follows the provider's requested mouse mode, while full-screen applications without mouse reporting receive Page Up or Page Down. Reattachment and output-gap recovery preserve the screen and input modes needed to keep scrolling correctly.
+- Opening an inactive, resumable Codex or Claude Code Session now resumes it asynchronously into a successor history record and attaches when ready.
+
+**Git and Worktrees**
+
+- New managed checkouts now default to the latest commit on the remote's advertised default branch. SylvOps discovers and fetches that branch without switching or rewriting the root checkout, pins the previewed commit, and fails visibly instead of silently using stale local state.
+- The desktop and TUI offer **Latest default branch**, **Current checkout**, and **Custom local ref**. The CLI defaults to the latest branch and adds `--remote`; Issue Start Work uses the same selectable, refreshable base preview.
+
+### Preview.9 changes included in preview.10
 
 **Terminal client**
 
