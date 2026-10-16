@@ -26,7 +26,7 @@ The TUI connects to the same local daemon and uses the same Workspace → Projec
 - `w` opens New Worktree for the Project that owns the selected Project, Worktree, or Session.
 - `/` searches commands and entities outside modal-specific workflows.
 
-The header and footer stay compact. Their labels and shortcuts change with the focused pane or active mode so unavailable actions are not advertised.
+The header and footer stay compact. Their labels and shortcuts change with the focused pane or active mode so unavailable actions are not advertised. When the terminal is wide enough, the footer also shows the running build or preview version without displacing contextual actions.
 
 ## Customize appearance
 
@@ -41,11 +41,15 @@ Press `s`, choose Settings in the header, or open Settings from the command pale
 
 Choose Comfortable or Compact density and Cards or List for the Active Sessions view. Changes preview immediately. Apply persists them through daemon-backed TUI state; Cancel or `Escape` restores the complete prior appearance. TUI preferences remain separate from desktop preferences and never rewrite provider-owned terminal colors.
 
+Named themes extend their background into compatible terminal padding, including Windows Terminal. Terminal Default restores the terminal profile's own background, and the TUI restores that background when it exits. Tabs, title bars, and native window borders remain controlled by the terminal application.
+
 ## Switch between Explorer and Active Sessions
 
 Press `e` for the hierarchy or `a` to see Starting, Running, and Needs feedback Sessions across the open Workspace. These are navigator views beside the Terminal, Changes, or Details main view rather than a fourth main tab. Needs feedback sorts first, followed by Running and Starting, with recent activity breaking ties.
 
-Cards are the default and use two columns only when the navigator is wide enough. They show provider, Project, Worktree, recent activity, and inline actions. List uses compact one-line rows containing the status and Session name so more Sessions remain visible at once. Moving selection does not attach; press `Enter` or choose Open terminal explicitly. When a Session is no longer active, it leaves Active Sessions but remains available as retained history in the Explorer.
+Cards are the default and show provider, Project, Worktree, recent activity, and inline actions. They use two columns only when each card remains at least 36 columns wide. List uses compact one-line rows containing the Session name and state so more Sessions remain visible at once. Moving selection does not attach; press `Enter` or choose Open terminal explicitly. When a Session is no longer active, it leaves Active Sessions but remains available as retained history in the Explorer.
+
+Starting and Running use an animated ring. A Session waiting for input uses a distinct attention surface in both Cards and List. Only Needs feedback Sessions appear in the input-needed banner and `Shift+A` navigation; Running, failed, and finished Sessions are not counted as requiring input.
 
 The selected navigator view and width persist between runs. Width is bounded to 24–80 columns. On narrow terminals, `Tab` switches the full screen between Navigator and Main.
 
@@ -53,9 +57,15 @@ Terminal sizing follows the actual rendered main panel, including the current na
 
 ## Review changes
 
-Press `g` to load the selected Worktree's bounded, read-only Git diff, then press `2` to open Changes. File headers, hunk headers, additions, deletions, context, and notices use distinct theme-aware styles.
+Press `g` to load the selected Worktree's bounded, read-only Git diff, then press `2` to open Changes. File headers, hunk headers, additions, deletions, metadata, context, and notices use distinct theme-aware styles.
 
 Use the arrow keys, `j` and `k`, Page Up and Page Down, or the mouse wheel to scroll. Reloading the diff returns to the top. Diff viewing does not alter the Worktree, and running Sessions continue while Changes is open.
+
+## Use an attached terminal
+
+The TUI displays the provider cursor when the attached terminal has not hidden it. Input is delivered in order through a bounded queue without holding up screen updates while acknowledgements are pending. New output wakes the interface immediately. If input becomes congested or delivery fails, the TUI reports it explicitly and requires you to detach and reattach before typing again; it does not silently replay failed input.
+
+While attached, use the wheel or `Shift+PageUp` and `Shift+PageDown` to inspect bounded local history. `Shift+Home` jumps to the oldest retained output and `Shift+End` returns to the live row. Typing also returns to the live row. When a full-screen provider explicitly requests mouse input, controller attachments forward bounded wheel events to that application instead; click and drag forwarding remain unavailable.
 
 ## Browse for a repository
 
@@ -83,3 +93,5 @@ See [GitHub Issues and Pull Requests](./github) for setup, privacy boundaries, a
 ## Remove entities safely
 
 Press `d` on the selected entity to inspect its contextual action: Stop Session for a live Session, Delete Session for an inactive Session, Remove Worktree, Remove Project, or Delete Workspace. Review the named target and filesystem effect, then press `y` to confirm. A refusal explains which child, running process, or Git condition blocks removal.
+
+When tracked changes, untracked content, or ignored content blocks Worktree removal, the TUI opens a scrollable dialog with totals and a categorized sample of up to 10 paths. A path ending in `/` can represent an entire directory. The sample is informational rather than a complete cleanup list: review the Worktree yourself, move or remove the content deliberately, and retry. SylvOps does not delete anything during the refusal.
