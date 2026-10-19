@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onBeforeUnmount, ref } from "vue";
 import { release } from "../data/release";
 
 const props = defineProps<{ platform: "windows" | "linux" }>();
-const copied = ref(false);
+const copyState = ref<"idle" | "copied" | "failed">("idle");
+let resetTimer: ReturnType<typeof setTimeout> | undefined;
+onBeforeUnmount(() => clearTimeout(resetTimer));
 
 const command = computed(() =>
   props.platform === "windows"
@@ -12,6 +14,7 @@ const command = computed(() =>
 );
 
 async function copyCommand() {
+  clearTimeout(resetTimer);
   try {
     await navigator.clipboard.writeText(command.value);
   } catch {
@@ -20,14 +23,22 @@ async function copyCommand() {
     textarea.setAttribute("readonly", "");
     textarea.style.position = "fixed";
     textarea.style.opacity = "0";
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    textarea.remove();
+    const previousFocus = document.activeElement;
+    try {
+      document.body.appendChild(textarea);
+      textarea.select();
+      if (!document.execCommand("copy")) throw new Error("Copy unavailable");
+    } catch {
+      copyState.value = "failed";
+      return;
+    } finally {
+      textarea.remove();
+      if (previousFocus instanceof HTMLElement) previousFocus.focus();
+    }
   }
-  copied.value = true;
-  window.setTimeout(() => {
-    copied.value = false;
+  copyState.value = "copied";
+  resetTimer = setTimeout(() => {
+    copyState.value = "idle";
   }, 1600);
 }
 </script>
@@ -38,12 +49,21 @@ async function copyCommand() {
       <span>{{ platform === "windows" ? "PowerShell" : "Shell" }}</span>
       <button
         type="button"
-        :aria-label="copied ? 'Command copied' : 'Copy command'"
+        :aria-label="copyState === 'copied' ? 'Command copied' : 'Copy command'"
         @click="copyCommand"
       >
-        {{ copied ? "Copied" : "Copy" }}
+        {{ copyState === "copied" ? "Copied" : "Copy" }}
       </button>
     </div>
     <pre><code>{{ command }}</code></pre>
+    <p class="copy-status" role="status" aria-live="polite">
+      {{
+        copyState === "failed"
+          ? "Could not copy. Select the command above and copy it manually."
+          : copyState === "copied"
+            ? "Command copied."
+            : ""
+      }}
+    </p>
   </div>
 </template>

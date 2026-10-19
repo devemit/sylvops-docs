@@ -21,7 +21,7 @@ const pages = [
 
 export default defineConfig({
   lang: "en-US",
-  title: "SylvOps Docs",
+  title: "SylvOps",
   titleTemplate: ":title · SylvOps Docs",
   description:
     "Install, understand, and use SylvOps to run coding agents in isolated Git worktrees.",
@@ -41,14 +41,12 @@ export default defineConfig({
       },
     ],
     ["meta", { name: "theme-color", content: "#15181e" }],
-    ["meta", { property: "og:site_name", content: "SylvOps Docs" }],
+    ["meta", { property: "og:site_name", content: "SylvOps" }],
     ["meta", { property: "og:type", content: "website" }],
   ],
   transformPageData(pageData) {
-    const title =
-      pageData.frontmatter.layout === "home"
-        ? "SylvOps documentation"
-        : `${pageData.title} · SylvOps Docs`;
+    const isHome = pageData.relativePath === "index.md";
+    const title = isHome ? pageData.title : `${pageData.title} · SylvOps Docs`;
     const description =
       pageData.description ||
       pageData.frontmatter.description ||
@@ -68,12 +66,16 @@ export default defineConfig({
   },
   themeConfig: {
     logo: { src: "/sylvops.png", alt: "SylvOps tree" },
-    siteTitle: "SylvOps Docs",
+    siteTitle: "SylvOps",
     nav: [
       { text: "Why SylvOps", link: "/why-sylvops" },
-      { text: "Guide", link: "/getting-started" },
+      {
+        text: "Docs",
+        link: "/getting-started",
+        activeMatch:
+          "/(getting-started|core-concepts|working-with-git|multiple-agents|providers|tui|github|cli-reference|updates|security|troubleshooting|roadmap|contributing)",
+      },
       { text: "Install", link: "/installation" },
-      { text: "CLI", link: "/cli-reference" },
       { text: release.version, link: release.releaseUrl },
     ],
     sidebar: [
@@ -86,6 +88,7 @@ export default defineConfig({
       { text: "Project", items: pages.slice(13) },
     ],
     outline: { level: [2, 3], label: "On this page" },
+    search: { provider: "local" },
     socialLinks: [{ icon: "github", link: release.repositoryUrl }],
     editLink: {
       pattern: "https://github.com/devemit/sylvops-docs/edit/main/docs/:path",
