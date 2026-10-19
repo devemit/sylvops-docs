@@ -7,6 +7,10 @@ description: Install and verify the unsigned SylvOps preview on Windows or Linux
 
 SylvOps <ReleaseVersion /> is a free unsigned testing preview. Open that version link to reach the published preview release.
 
+Choose your platform for the tagged installer command. Download the script, inspect it, and then run it. The installer downloads the matching archive and verifies its checksum.
+
+<InstallPanel mode="guide" />
+
 ::: warning Unsigned testing preview
 The preview is not an official signed application release. Windows may identify the executable as coming from an unknown publisher. Do not bypass an operating-system security warning. Build from source or wait for an official signed release when trust cannot be established.
 :::
@@ -29,9 +33,9 @@ Choose one installation method:
 
 ### Recommended PowerShell installation
 
-The installer script downloads the preview ZIP and `SHA256SUMS`, verifies the archive, and copies `sylvops.exe` to `%LOCALAPPDATA%\SylvOps\bin`. Download the tagged script first so you can inspect it before running it:
+The installer script in the platform selector above downloads the preview ZIP and `SHA256SUMS`, verifies the archive, and copies `sylvops.exe` to `%LOCALAPPDATA%\SylvOps\bin`. Select **Windows** for the PowerShell command.
 
-<PreviewInstallCommand platform="windows" />
+After installation, [start your first Shell session](./getting-started#launch-with-your-repository).
 
 ::: tip Using the installer script?
 You do not need to download the ZIP or `SHA256SUMS` yourself. The script downloads and verifies both. Download those files manually only when following the manual archive instructions below.
@@ -66,9 +70,9 @@ The ZIP includes `UNSIGNED-PREVIEW.txt`, launch helpers, the README, and the lic
 
 ## Linux preview
 
-The tagged install script uses the portable archive, verifies its checksum, and installs the executable to `~/.local/bin` by default:
+Select **Linux** in the platform selector above for the tagged install script. It uses the portable archive, verifies its checksum, and installs the executable to `~/.local/bin` by default.
 
-<PreviewInstallCommand platform="linux" />
+After installation, [start your first Shell session](./getting-started#launch-with-your-repository).
 
 Add `~/.local/bin` to `PATH` yourself if your shell does not already include it.
 

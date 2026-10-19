@@ -4,6 +4,7 @@ import ReleaseBadge from "./ReleaseBadge.vue";
 import ReleaseVersion from "./ReleaseVersion.vue";
 import DownloadLink from "./DownloadLink.vue";
 import PreviewInstallCommand from "./PreviewInstallCommand.vue";
+import InstallPanel from "./InstallPanel.vue";
 import ConceptMap from "./ConceptMap.vue";
 import HomeMark from "./HomeMark.vue";
 import "./custom.css";
@@ -15,6 +16,7 @@ export default {
     app.component("ReleaseVersion", ReleaseVersion);
     app.component("DownloadLink", DownloadLink);
     app.component("PreviewInstallCommand", PreviewInstallCommand);
+    app.component("InstallPanel", InstallPanel);
     app.component("ConceptMap", ConceptMap);
     app.component("HomeMark", HomeMark);
   },
