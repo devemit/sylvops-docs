@@ -52,7 +52,11 @@ The fetch is bounded, disables Git hooks and interactive credential prompts, omi
 
 ## Attention alerts
 
-Needs-feedback alerts are presentation-only. Alert text contains a bounded, control-character-stripped Session display name and never includes terminal or conversation content. The desktop uses an in-app message and a local system sound when available; the TUI rings the terminal bell and, on Windows, requests a quiet-time-aware notification-area popup.
+Attention Events are durable daemon state, but notifications and sound are presentation only. The daemon grants at most one live delivery claim for each new input-requested, successful-completion, recoverable-failure, or terminal-failure event. It does not recreate claims from existing state at startup or reconnect.
+
+Native notifications on Windows, macOS, and Linux contain only the bounded, control-character-stripped Session display name and Attention Reason. They never include prompt text, terminal output, raw errors, paths, repository data, or Work Source content. Activating a notification selects retained Session history; it does not resume the Conversation or start a fresh Session.
+
+Native notification and sound preferences are independent, shared through the daemon, and enabled by default. Connected clients coordinate claims so one event produces at most one external alert, and a foreground client already showing the affected Session suppresses notification and sound across clients. Platform quiet-time and do-not-disturb policy remains authoritative; failed native delivery falls back to an in-client message without changing Session or Attention state.
 
 ## Repository and provider output
 

@@ -92,17 +92,23 @@ SylvOps adds an application-owned, daemon-lifetime settings layer when it launch
 
 These hooks are observational. They do not approve or deny permissions, answer questions, change Claude's permission mode, or edit the user's, project's, or organization's Claude settings. If Claude Code does not establish a verified session identity within 15 seconds, SylvOps shows recovery guidance while leaving the terminal attached and usable.
 
+Session lifecycle, Provider activity, and Attention Events are tracked independently. Needs Attention includes input requested, successful completion, recoverable failure, and terminal failure. A completed turn remains live and attachable when the Provider can accept another prompt; interruption is distinct from successful completion.
+
+Attention is durable until its reason-specific acknowledgement or recovery rule applies. Native notifications and sound are presentation only: they are claimed once across connected clients, are not replayed on startup, and can be controlled independently through Settings. A foreground client already showing the affected Session suppresses its external alert.
+
 ## Resume
 
-When Codex or Claude Code reports a verified external session ID and the source session is eligible, SylvOps can create one successor session:
+When Codex or Claude Code reports a verified Conversation identity and the latest Session is eligible, SylvOps can continue the Conversation in one successor Session:
 
 ```text
 sylvops session resume <SESSION_ID>
 ```
 
-Opening an eligible inactive Session in the desktop or TUI performs this resume automatically, selects the successor history record, and attaches to its terminal. The CLI command remains explicit.
+Opening any historical Session in the desktop or TUI follows its lineage to the latest leaf. A live leaf is attached without creating another Session. An eligible terminal leaf creates exactly one successor, selects it, and attaches to its terminal. The CLI command remains explicit.
 
-Resume is guarded by the original provider and checkout identity, requires an available resume-capable provider, and is refused when a newer successor already exists. Claude resumes the exact verified conversation with `--resume`; SylvOps does not select Claude's continue-latest, named-session, or fork-session behavior. When resume is unavailable, the old history remains retained and starting a fresh Session is a separate action.
+Resume is guarded by the original provider and Worktree identity, requires a verified Conversation identity and an available, authenticated, resume-capable Provider, and serializes concurrent attempts so a lineage has at most one successor. Codex and Claude Code can resume from any eligible terminal lifecycle, including an explicitly stopped Session; Shell cannot resume. A successor whose Provider launch fails remains historical and can be retried from the new lineage leaf.
+
+Claude resumes the exact verified Conversation with `--resume`; SylvOps does not select Claude's continue-latest, named-session, or fork-session behavior. When resume is unavailable, the retained history shows the exact refusal and starting a fresh Session remains a separate action.
 
 ## Troubleshoot Codex
 

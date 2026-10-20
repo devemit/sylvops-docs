@@ -47,6 +47,20 @@ A session is one interactive process running inside a checkout. It can use the S
 
 Leaving the terminal or closing a client does not stop the session. Explicitly choosing **Stop** does.
 
+Session status has three independent parts:
+
+- **Lifecycle** records whether the process is fresh, starting, running, exited, failed, terminated, or disconnected.
+- **Provider activity** records whether a live coding agent is working, awaiting input, completed, interrupted, or in a recoverable failure. Shell sessions have no Provider activity.
+- **Attention** records the latest input request, successful completion, recoverable failure, or terminal failure and whether it is still pending.
+
+A completed agent turn can therefore still belong to a live, attachable Session that is ready for another prompt. Process exit, a completed turn, and a request for attention are not interchangeable.
+
+## Conversation and Session Lineage
+
+Codex and Claude Code can continue one provider-owned Conversation across a linear Session Lineage. Each historical Session has at most one successor. Opening any member follows the lineage to its latest Session, attaches if that Session is live, or creates one guarded successor when the terminal Session is eligible to resume.
+
+Historical attempts remain visible. Starting fresh is a separate action and never silently replaces resume.
+
 ## Provider
 
 A provider adapts an interactive command to SylvOps. The current providers are:

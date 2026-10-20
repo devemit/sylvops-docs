@@ -19,7 +19,28 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.10
+### What changed in preview.11
+
+**Session state and attention**
+
+- Session lifecycle, Provider activity, and Attention Events are now independent. A completed Codex or Claude Code turn can remain live and attachable, interruption is not reported as success, and process exit no longer stands in for whether work was seen.
+- Needs Attention now covers input requested, successful completion, recoverable failure, and terminal failure. Pending events persist across clients and restart until their reason-specific acknowledgement or recovery rule applies.
+- The TUI Sessions overview places Needs Attention ahead of active work, with reason-specific icons, labels, accessible styling, urgency ordering, and explicit dismissal for recoverable failures.
+- Session shutdown drains already authenticated Provider hooks before finalizing the process outcome, preventing a last completion or Conversation-identity event from being discarded during a fast exit.
+
+**Resume Conversation**
+
+- Codex and Claude Code Conversations now have a persisted linear Session Lineage. Opening any historical Session follows it to the latest attempt, attaches a live leaf, or creates exactly one successor from an eligible terminal leaf.
+- Desktop and TUI retain historical attempts, show exact daemon-owned refusal reasons, and keep **Start fresh** separate from resume. Concurrent requests cannot create duplicate successors, and a failed successor launch remains retryable from the new leaf.
+- Windows Codex launches restore verified Conversation identity capture, including supported paths with spaces or non-ASCII characters. Codex-managed trust metadata no longer prevents safe cleanup of SylvOps-owned runtime profiles.
+
+**Notifications**
+
+- Desktop and TUI can deliver native Attention Notifications on Windows, macOS, and Linux, with a bounded in-client fallback when native services are unavailable. Notification text contains only the Session name and bounded Attention Reason.
+- Native notifications and sound have independent shared preferences and are enabled by default. The daemon grants one live claim per new event, coordinates concurrent clients, and suppresses external alerts when a foreground client already shows the affected Session.
+- Existing events are not replayed at startup or reconnect. Activating a notification opens retained history without resuming the Conversation or starting a fresh Session.
+
+### Preview.10 changes included in preview.11
 
 **Desktop**
 
