@@ -39,19 +39,21 @@ Press `s`, choose Settings in the header, or open Settings from the command pale
 - Gruvbox Dark;
 - Solarized Light.
 
-Choose Comfortable or Compact density and Cards or List for the Active Sessions view. Changes preview immediately. Apply persists them through daemon-backed TUI state; Cancel or `Escape` restores the complete prior appearance. TUI preferences remain separate from desktop preferences and never rewrite provider-owned terminal colors.
+Choose Comfortable or Compact density and Cards or List for the Sessions overview. Native notifications and sound have independent daemon-backed switches, are enabled by default, and are shared with the desktop. Appearance changes preview immediately. Apply persists them; Cancel or `Escape` restores the complete prior settings. TUI appearance remains separate from desktop appearance and never rewrites provider-owned terminal colors.
 
 Named themes extend their background into compatible terminal padding, including Windows Terminal. Terminal Default restores the terminal profile's own background, and the TUI restores that background when it exits. Tabs, title bars, and native window borders remain controlled by the terminal application.
 
-## Switch between Explorer and Active Sessions
+## Switch between Explorer and Sessions
 
-Press `e` for the hierarchy or `a` to see Starting, Running, and Needs feedback Sessions across the open Workspace. These are navigator views beside the Terminal, Changes, or Details main view rather than a fourth main tab. Needs feedback sorts first, followed by Running and Starting, with recent activity breaking ties.
+Press `e` for the hierarchy or `a` for the Sessions overview across the open Workspace. These are navigator views beside the Terminal, Changes, or Details main view rather than a fourth main tab.
 
-Cards are the default and show provider, Project, Worktree, recent activity, and inline actions. They use two columns only when each card remains at least 36 columns wide. List uses compact one-line rows containing the Session name and state so more Sessions remain visible at once. Moving selection does not attach; press `Enter` or choose Open terminal explicitly. When a Session is no longer active, it leaves Active Sessions but remains available as retained history in the Explorer.
+**Needs Attention** appears before active work and includes pending input requests, recoverable failures, terminal failures, and successful completions—even when a Session is no longer active. Reasons are ordered by urgency, then newest event first. **Active Sessions** contains live Starting and Running Sessions without pending attention, with Running before Starting and recent activity breaking ties. A live Session returns to Active Sessions after its attention is acknowledged or resolved.
 
-Starting and Running use an animated ring. A Session waiting for input uses a distinct attention surface in both Cards and List. Only Needs feedback Sessions appear in the input-needed banner and `Shift+A` navigation; Running, failed, and finished Sessions are not counted as requiring input.
+Cards are the default and show provider, Project, Worktree, recent activity, and inline actions. They use two columns only when each card remains at least 36 columns wide. List uses compact one-line rows containing the Session name and state so more Sessions remain visible at once. Each attention reason has its own icon, label, and accessible styling. Moving selection does not attach; press `Enter` or choose Open terminal explicitly. `Shift+A` jumps to the highest-priority pending item.
 
-When a Session newly enters Needs feedback, the TUI rings the terminal bell. On Windows it also requests a popup that respects quiet time. Each transition alerts once, existing Needs feedback state at startup is not replayed, and notification text contains only bounded Session labels rather than provider terminal content.
+Opening input requested attaches but leaves the event pending until the Provider recovers. Opening successful-completion or terminal-failure history acknowledges that exact event. A recoverable failure can be dismissed with `d`; the same effective condition stays quiet until recovery or replacement. These changes are daemon-owned and appear in every connected client.
+
+For a newly created Attention Event, one connected client may present a native notification and optional sound. Windows, macOS, and Linux use their available system path and fall back to an in-client message when native presentation is unavailable. A focused client already showing the affected Session suppresses the external alert across clients. Startup, reconnect, rename, and unchanged refreshes do not replay it.
 
 The selected navigator view and width persist between runs. Width is bounded to 24–80 columns. On narrow terminals, `Tab` switches the full screen between Navigator and Main.
 
@@ -71,9 +73,11 @@ While attached, use the wheel, `Shift+PageUp` and `Shift+PageDown`, or the click
 
 The active screen and supported input modes survive reattachment and output-gap recovery, so provider scrolling continues to route correctly after reconnecting.
 
-## Resume a stopped conversation
+## Resume a Conversation
 
-Select an inactive Codex or Claude Code Session with a verified resumable conversation and press `Enter` or choose **Open terminal**. The TUI creates the guarded successor asynchronously, selects it, and attaches when ready. If the provider is unavailable, the saved conversation is unverified, or a newer successor already exists, history remains available and the TUI asks you to create a fresh Session explicitly.
+Select any historical Codex or Claude Code Session and press `Enter` or choose **Open terminal**. The daemon follows its Session Lineage to the latest leaf. It attaches a live leaf or creates and attaches exactly one successor from an eligible terminal leaf, including one that exited, failed, was stopped, or became disconnected.
+
+Historical attempts stay visible with derived attempt markers. If resume is unavailable because the Conversation identity is unverified, the Provider is unavailable, the Worktree is invalid, or another successor already exists, retained history opens with the exact refusal. **Start fresh** remains a separate action. A failed successor launch remains the latest historical leaf and can be retried.
 
 ## Browse for a repository
 

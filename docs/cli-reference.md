@@ -119,9 +119,9 @@ sylvops session delete <SESSION_ID> --confirm
 
 Defaults are Shell, 80 columns, and 24 rows. While attached from the CLI, press `Ctrl+]` to detach without stopping the process.
 
-`stop` ends a live Session's process tree but retains its record. `delete` removes an inactive Session's retained SylvOps state while preserving its Worktree and files.
+`stop` ends a live Session's process tree but retains its record. `delete` removes a terminal Session's retained SylvOps state while preserving its Worktree and files.
 
-In the desktop and TUI, opening an eligible inactive Codex or Claude Code Session automatically creates its one allowed successor and attaches to it. The explicit CLI `resume` command remains available for scripts and manual control.
+In the desktop and TUI, opening any Session in a Codex or Claude Code lineage follows it to the latest leaf. A live leaf is attached; an eligible terminal leaf gets exactly one successor. The explicit CLI `resume` command uses the same daemon-owned lineage rules and remains available for scripts and manual control.
 
 ## Leaf-first removal
 
@@ -129,7 +129,7 @@ Removal never cascades through remaining child entities. Every command inspects 
 
 | Operation        | Requirement                                                    | Filesystem effect                                                                                  |
 | ---------------- | -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| Delete Session   | Session is inactive with no owned process tree                 | Removes retained SylvOps Session state; preserves the Worktree and files                           |
+| Delete Session   | Session has terminal lifecycle with no owned process tree      | Removes retained SylvOps Session state; preserves the Worktree and files                           |
 | Remove Project   | No Sessions or active managed non-root Worktrees remain        | Unregisters the Project; preserves the repository, root checkout, branches, and external Worktrees |
 | Remove Worktree  | Clean active managed non-root Worktree with no active Sessions | Removes that managed working directory; preserves its Git branch                                   |
 | Delete Workspace | Workspace contains no Projects                                 | Removes only the empty organizational group                                                        |

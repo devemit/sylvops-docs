@@ -90,7 +90,7 @@ claude auth status
 
 SylvOps uses your existing CLI installation and authentication. It does not install or update agent CLIs, copy credentials, store provider secrets, or choose a provider's permission mode. See [Providers](./providers) for supported versions, health checks, and troubleshooting.
 
-Opening an inactive Codex or Claude Code session with a verified resumable conversation creates one guarded successor session and attaches to it. Otherwise, SylvOps keeps the history and asks you to start a new session explicitly. Advanced model, effort, and initial-prompt options are available through the CLI.
+Opening any Session in a Codex or Claude Code Conversation follows its Session Lineage to the latest attempt. SylvOps attaches to a live leaf or creates one guarded successor from an eligible terminal leaf. If resume is unavailable, it keeps the history, explains the exact reason, and offers starting fresh as a separate action. Advanced model, effort, and initial-prompt options are available through the CLI.
 
 ## Organize more work
 

@@ -30,11 +30,6 @@ These items are not available in the current public preview. Do not rely on them
 - Remote execution
 - Additional provider adapters after the same safety and recovery requirements are met
 
-## Coordination
-
-- Broader desktop operating-system notifications beyond the shipped Needs-feedback in-app alert and sound
-- More ways to surface agent attention without scraping terminal output
-
 ## Distribution
 
 - Official signed `v0.1.0` release
