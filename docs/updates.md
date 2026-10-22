@@ -19,7 +19,27 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.11
+### What changed in preview.12
+
+**Startup and terminal display**
+
+- Desktop and TUI show the same uppercase ASCII `SYLVOPS` wordmark during startup, for at least two seconds. Startup errors bypass the minimum display time.
+- Default TUI Session colors now follow the selected application theme, so a host terminal background reset cannot turn only the embedded terminal black. Explicit program colors are preserved; Terminal Default continues to follow the host.
+- The TUI preserves the terminal parser's cell columns around Unicode symbols and emoji. Width-conflicting symbols use a cell-compatible presentation instead of shifting or hiding following letters; raw PTY contents are unchanged.
+
+**Terminal input**
+
+- Both clients retain Shift, Alt, and Control modifiers on arrow and cursor-position keys. Provider shortcuts for navigating pending questions remain distinct from ordinary cursor movement.
+- The TUI distinguishes Shift+Enter draft newlines from Enter submission when the host reports the modifier, and captures multiline paste as a paste event. When the provider requests bracketed paste, pasted newlines stay inside its paste boundaries instead of acting as separate submissions.
+- Provider controls keep their native meaning. In Codex, Tab queues a follow-up for the next turn and Enter steers the current turn; Escape is not remapped to queue.
+
+**Recovery and distribution**
+
+- Notification delivery and Attention review are more reliable, and Codex resume preserves hook approval while explaining when Conversation identity is not ready.
+- Bundled packages again carry the offline installation, first-run, update, removal, and troubleshooting guide. CI checks that guide before spending time compiling native packages.
+- This remains an unsigned Windows/Linux preview with manual replacement, checksums, and provenance attestations. macOS packages, a native Windows installer, and signed in-app updates remain excluded.
+
+### Preview.11 changes included in preview.12
 
 **Session state and attention**
 

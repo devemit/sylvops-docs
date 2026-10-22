@@ -13,6 +13,8 @@ sylvops tui
 
 The TUI connects to the same local daemon and uses the same Workspace → Project → Worktree → Session state as the desktop.
 
+During startup, both clients display the uppercase ASCII `SYLVOPS` wordmark for at least two seconds and until initial loading finishes. Startup errors are displayed immediately.
+
 ## Navigate
 
 - `Tab` switches between the Explorer and main area.
@@ -43,6 +45,8 @@ Choose Comfortable or Compact density and Cards or List for the Sessions overvie
 
 Named themes extend their background into compatible terminal padding, including Windows Terminal. Terminal Default restores the terminal profile's own background, and the TUI restores that background when it exits. Tabs, title bars, and native window borders remain controlled by the terminal application.
 
+Default Session foreground and background colors follow the selected TUI theme directly. Explicit colors set by the provider remain unchanged. This prevents a host terminal reset from changing only the embedded Session background while the surrounding panels retain their theme.
+
 ## Switch between Explorer and Sessions
 
 Press `e` for the hierarchy or `a` for the Sessions overview across the open Workspace. These are navigator views beside the Terminal, Changes, or Details main view rather than a fourth main tab.
@@ -72,6 +76,12 @@ The TUI displays the provider cursor when the attached terminal has not hidden i
 While attached, use the wheel, `Shift+PageUp` and `Shift+PageDown`, or the clickable **Older** and **Newer** footer controls. On the normal screen, these inspect bounded local history unless the provider requested mouse reporting. In a full-screen application, a controller forwards the requested wheel events or Page Up/Page Down when mouse reporting is unavailable. `Shift+Home` jumps to the oldest retained local output and `Shift+End` returns to the live row. Typing also returns to the live row. Observer attachments can inspect local history but cannot send scrolling input to the provider; click and drag forwarding remain unavailable.
 
 The active screen and supported input modes survive reattachment and output-gap recovery, so provider scrolling continues to route correctly after reconnecting.
+
+Shift, Alt, and Control modifiers on arrow keys are preserved, including provider shortcuts that focus and navigate pending questions. Shift+Enter inserts a draft newline when the host terminal reports it distinctly. Multiline paste is forwarded using the provider's requested paste mode, so pasted newlines are not mistaken for separate Enter submissions by applications that request bracketed paste.
+
+Provider submit, queue, and interrupt controls keep their native meaning. In Codex, press Tab while it is working to queue a follow-up for the next turn; Enter steers the current turn. Escape is not rebound to queue. See the [official Codex interactive shortcuts](https://learn.chatgpt.com/docs/developer-commands#interactive-shortcuts). Other providers retain their own controls.
+
+The renderer keeps each terminal cell's recorded width around Unicode symbols and emoji. When a symbol's emoji presentation conflicts with its recorded width, the TUI uses a cell-compatible presentation so following letters stay in their correct columns. Raw Session output is unchanged.
 
 ## Resume a Conversation
 
