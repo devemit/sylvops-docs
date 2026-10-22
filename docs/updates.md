@@ -126,6 +126,8 @@ Automated publication is gated by hosted CI, package checks, checksums, and prov
 
 Preview update discovery fails closed. To upgrade:
 
+Finish or explicitly stop active Sessions, stop the old daemon, and close desktop/TUI clients before replacing files. Leaving a terminal only detaches it. On Debian or Ubuntu, use `sudo apt install --reinstall ./sylvops-linux-x86_64.deb` for the verified new package when previews share the same base version.
+
 1. Open the [SylvOps releases](https://github.com/devemit/sylvops/releases) page.
 2. Open the newer preview's own release page.
 3. Download its package and `SHA256SUMS`.
