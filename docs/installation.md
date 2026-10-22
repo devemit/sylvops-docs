@@ -138,10 +138,20 @@ On Windows, use `target\release\sylvops.exe` from PowerShell and install the Vis
 
 Unsigned previews do not receive signed in-app updates. When a newer preview is published:
 
-1. Stop active sessions you do not want to keep running.
+1. Finish work or explicitly stop every active Session. Leaving a terminal only detaches it.
 2. Download and verify the newer preview.
-3. Install or extract it explicitly using the new version's instructions.
-4. Launch that exact executable and confirm its version.
+3. Stop the old daemon with `sylvops daemon stop`, close desktop/TUI clients, then install or extract the new preview explicitly using its own instructions.
+4. Launch that exact executable and confirm the preview tag in desktop Settings or the wide TUI footer.
+
+`sylvops --version` reports the base workspace version, without the preview suffix. Use the displayed preview tag and the published package checksum to distinguish preview builds.
+
+For Debian or Ubuntu, explicitly reinstall the verified local package when replacing a preview with the same base version:
+
+```sh
+sudo apt install --reinstall ./sylvops-linux-x86_64.deb
+```
+
+After upgrading to preview.13, create a fresh managed Codex Session and [review its lifecycle hooks](./providers#review-codex-lifecycle-hooks). The PowerShell-compatible Windows command has a new source hash, so old approvals do not apply. Existing Sessions keep their original launch configuration, and old records missing Conversation identity are not repaired.
 
 Do not use the current preview's **Application updates** controls; they fail closed without signed official-release metadata.
 

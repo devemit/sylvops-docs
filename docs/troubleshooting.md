@@ -61,6 +61,26 @@ sylvops provider probe codex
 
 Complete authentication outside SylvOps. See the [official authentication guide](https://learn.chatgpt.com/docs/auth).
 
+## Session notifications or Codex resume are missing
+
+### Symptoms
+
+The Settings notification test works, but a Session does not alert when input is requested or work completes. The footer may report missing Provider callbacks, and resume may be unavailable because no Conversation identity was recorded.
+
+### Fix
+
+1. Install the intended newer preview. Finish or explicitly stop active Sessions, stop the old daemon, and launch the new executable explicitly. A running process does not change when source or downloads change.
+2. Refresh Codex Provider health and create a fresh managed Session.
+3. In that Session, open `/hooks`. Review each SylvOps handler and press `t` until all eight show **Active**. A corrected command has a new hash; old approvals are not copied.
+4. Submit another prompt. If callbacks remain missing, inspect hook execution errors. The warning describes monitoring health; it does not mean the Provider process failed.
+5. Check that a Conversation identity was recorded before testing Stop and resume. Historical records missing that identity are not repaired by upgrading.
+
+The Settings test exercises presentation only. Real Session alerts require an attention event from a valid callback. When a foreground client already displays the affected Session, native notification and sound are deliberately suppressed; pending attention remains colored until reviewed or resolved. Test background delivery with another Session or window selected.
+
+Explicit SylvOps **Stop session** should produce **Stopped**, remove prior attention tint, and create no failure notification. An unexpected Provider exit without a trusted completion callback can still be **Failed**, even with exit code zero; report the categorical failure reason and whether Stop was used. Never share hook tokens, environment values, prompts, or terminal contents.
+
+Real-account completion/resume verification is opt-in and requires manual hook review. The unsigned preview's automated checks do not establish that account-specific result.
+
 ## Claude Code is missing or too old
 
 ### Symptoms
@@ -128,6 +148,8 @@ sylvops daemon stop
 ```
 
 For the Windows preview, use the full `%LOCALAPPDATA%\SylvOps\bin\sylvops.exe` path so an older `PATH` entry is not selected.
+
+Preview builds share the base version reported by `sylvops --version`. To distinguish previews, also check the tag displayed in desktop Settings or the wide TUI footer and verify the downloaded package against its release's checksum.
 
 ## Windows shows an unknown publisher warning
 
