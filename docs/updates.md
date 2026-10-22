@@ -19,7 +19,19 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
-### What changed in preview.12
+### What changed in preview.13
+
+- Windows Codex hooks use PowerShell-compatible commands, with literal relay paths preserved for spaces, Unicode, dollar signs, and backticks. The test fixture and actual CLI relay are exercised through PowerShell.
+- Managed Codex launch and resume select `--no-daemon` when advertised so work and hook credentials remain with the daemon-owned process tree.
+- Desktop Session rows show pending-attention surfaces alongside the TUI Cards/List behavior: amber for input/recoverable failure, green for completion awaiting review, and red for terminal failure. Selection preserves the signal; acknowledgement or resolution removes it.
+- Foreground Sessions remain color-only without an external notification or sound. Explicit Stop resolves prior attention without a new completion/failure alert, and accepted Stop requests have an audit record.
+- Missing-callback guidance is Provider-specific. Managed profiles preserve bounded Codex model preferences while continuing to validate hook definitions and trust metadata.
+
+After replacing the preview, restart the daemon, create a fresh managed Codex Session, and [review all eight SylvOps hooks](./providers#review-codex-lifecycle-hooks). The corrected command has a new hash and needs fresh trust. The Settings test proves notification presentation only; Session alerts and resume require callbacks and a verified Conversation identity. Old Session identity records are not repaired.
+
+Automated publication is gated by hosted CI, package checks, checksums, and provenance. Real-account completion/resume remains an opt-in check pending manual hook review; do not interpret the automated release proof as an account-specific result.
+
+### Preview.12 changes included in preview.13
 
 **Startup and terminal display**
 
@@ -119,7 +131,7 @@ Preview update discovery fails closed. To upgrade:
 3. Download its package and `SHA256SUMS`.
 4. Verify the exact package.
 5. Reinstall or replace the preview explicitly.
-6. Launch the intended executable and run `sylvops --version`.
+6. Launch the intended executable and confirm the preview tag in desktop Settings or the wide TUI footer. `sylvops --version` reports the base workspace version and cannot identify a preview suffix by itself.
 
 Do not assume a moving “latest” link represents the newest unsigned preview; GitHub prereleases are intentionally separate from the future official latest release.
 

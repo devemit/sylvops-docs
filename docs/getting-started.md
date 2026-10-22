@@ -78,6 +78,8 @@ codex login
 codex login status
 ```
 
+After starting a managed Codex Session, open `/hooks`, review the SylvOps handlers, and press `t` on each until all eight show **Active**. The corrected Windows command in preview.13 has a new source hash, so an older approval does not cover it. Submit another prompt and check that the missing-callback warning clears. Follow [Codex lifecycle hook review](./providers#review-codex-lifecycle-hooks) for details.
+
 ### Claude Code
 
 Install an official native Claude Code CLI version 2.1.145 or newer using the [official setup guide](https://docs.anthropic.com/en/docs/claude-code/getting-started). Sign in with Claude.ai or Anthropic Console:
