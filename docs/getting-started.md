@@ -15,7 +15,7 @@ You need Git and an installed SylvOps preview. Check Git in your normal terminal
 git --version
 ```
 
-[Install SylvOps for Windows or Linux](./installation). The current release is <ReleaseVersion />: an unsigned preview for Windows and Linux x86_64. macOS is not included. The installation guide covers verification and package choices.
+[Install SylvOps for Windows, Linux, or macOS](./installation). The current release is <ReleaseVersion />: a free unsigned preview for Windows/Linux x86_64 and macOS Intel/Apple silicon. Mac DMGs use ad-hoc signatures without Apple notarization. The installation guide covers verification, package choices, and first launch.
 
 ## Launch with your repository
 

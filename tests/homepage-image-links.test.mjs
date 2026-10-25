@@ -15,6 +15,7 @@ test("homepage journeys resolve under the deployed base path", () => {
   assert.ok(hrefs.includes(`${siteBase}getting-started`));
   assert.ok(hrefs.includes(`${siteBase}installation#windows-preview`));
   assert.ok(hrefs.includes(`${siteBase}installation#linux-preview`));
+  assert.ok(hrefs.includes(`${siteBase}installation#macos-preview`));
 
   for (const href of new Set(hrefs)) {
     if (href.startsWith("#")) {
@@ -34,7 +35,7 @@ test("homepage journeys resolve under the deployed base path", () => {
   }
 });
 
-test("homepage has product metadata and both accessible install panels", () => {
+test("homepage has product metadata and three accessible install panels", () => {
   const html = readFileSync(join(outputDirectory, "index.html"), "utf8");
   assert.match(
     html,
@@ -44,7 +45,7 @@ test("homepage has product metadata and both accessible install panels", () => {
   const tabs = [...html.matchAll(/<button\b[^>]*role="tab"[^>]*>/g)].map(
     ([tag]) => tag,
   );
-  assert.equal(tabs.length, 2);
+  assert.equal(tabs.length, 3);
   assert.ok(
     tabs.some(
       (tag) =>
@@ -66,6 +67,44 @@ test("homepage has product metadata and both accessible install panels", () => {
       "each installation tab must control an existing panel",
     );
   }
+  assert.ok(tabs.some((tag) => tag.includes('data-platform="macos"')));
+});
+
+test("Mac downloads use the selected release and guide exposes verification and first launch", () => {
+  const html = readFileSync(join(outputDirectory, "index.html"), "utf8");
+  const guide = readFileSync(
+    join(outputDirectory, "installation.html"),
+    "utf8",
+  );
+  const releaseSource = readFileSync(
+    join("docs", ".vitepress", "data", "release.ts"),
+    "utf8",
+  );
+  const tag = releaseSource.match(/tag: "([^"]+)"/)?.[1];
+  assert.ok(tag);
+  for (const asset of [
+    "sylvops-macos-aarch64.dmg",
+    "sylvops-macos-x86_64.dmg",
+    "SHA256SUMS",
+  ]) {
+    const url = `https://github.com/devemit/sylvops/releases/download/${tag}/${asset}`;
+    assert.ok(html.includes(url), `${asset} must be linked from the homepage`);
+    assert.ok(
+      guide.includes(url),
+      `${asset} must be linked from the installation guide`,
+    );
+  }
+  for (const anchor of [
+    "macos-preview",
+    "macos-first-launch",
+    "macos-cli-and-tui",
+    "uninstall-the-macos-preview",
+  ]) {
+    assert.ok(guide.includes(`id="${anchor}"`), `${anchor} must be available`);
+  }
+  assert.match(guide, /Open Anyway/);
+  assert.match(guide, /shasum/);
+  assert.doesNotMatch(guide, /Not available in unsigned previews/);
 });
 
 test("interactive workspace renders a useful static demo without JavaScript", () => {
