@@ -61,7 +61,7 @@ For a newly created Attention Event, one connected client may present a native n
 
 The selected navigator view and width persist between runs. Width is bounded to 24–80 columns. On narrow terminals, `Tab` switches the full screen between Navigator and Main.
 
-Terminal sizing follows the actual rendered main panel, including the current navigator width and optional attention banner. Provider-owned terminal content is not soft-wrapped by the surrounding application panel, and the banner does not hide the final terminal row. While attached, the TUI renders the provider application's visible cursor at its reported position.
+Terminal sizing follows the actual rendered main panel, including the current navigator width and optional attention banner. New attachments start at those dimensions. Normal-screen output wraps within the terminal grid and reflows when its width changes, preserving sentence endings within bounded history. Full-screen applications retain their resize and redraw behavior. The attention banner does not hide the final terminal row, and the TUI renders the Provider application's visible cursor at its reported position.
 
 ## Review changes
 
@@ -82,6 +82,16 @@ Shift, Alt, and Control modifiers on arrow keys are preserved, including provide
 Provider submit, queue, and interrupt controls keep their native meaning. In Codex, press Tab while it is working to queue a follow-up for the next turn; Enter steers the current turn. Escape is not rebound to queue. See the [official Codex interactive shortcuts](https://learn.chatgpt.com/docs/developer-commands#interactive-shortcuts). Other providers retain their own controls.
 
 The renderer keeps each terminal cell's recorded width around Unicode symbols and emoji. When a symbol's emoji presentation conflicts with its recorded width, the TUI uses a cell-compatible presentation so following letters stay in their correct columns. Raw Session output is unchanged.
+
+## Select and copy terminal text
+
+Left-drag inside an attached terminal to select visible text, then click **Copy** in its border or press **Ctrl+Shift+C**. Use the Copy action if the host terminal intercepts the shortcut. Read-only observers can select and copy too. Ctrl+C continues to interrupt the Provider.
+
+The selected view stays still while the Session keeps running and receiving output. Copy retains the selection and produces plain Unicode text with indentation and intentional line breaks; soft-wrapped rows are joined, and UI borders and terminal formatting are excluded. Selection is limited to the visible viewport, with a 1 MiB text limit. Scroll to the desired output before selecting; dragging does not automatically scroll across pages.
+
+Escape clears selection and returns to the live row. Without selection, Escape reaches the Provider normally. Typing, pasting, scrolling, resizing, resynchronizing, detaching, and Session or tab changes discard stale selection.
+
+Copy writes to the system clipboard on the machine running the TUI. Windows and macOS use their native clipboard; Linux needs an accessible X11 or supported Wayland clipboard. In a headless or SSH environment, the clipboard may be unavailable; the TUI reports that inline and keeps selection. On Linux, keep the TUI running until pasting; clipboard availability after it exits depends on the desktop clipboard manager.
 
 ## Resume a Conversation
 

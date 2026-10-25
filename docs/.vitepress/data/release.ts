@@ -1,11 +1,11 @@
 export const release = {
   productName: "SylvOps",
-  version: "0.1.0-preview.13",
-  tag: "v0.1.0-preview.13",
-  sourceRevision: "1a6623f5bb00b9f4c0b127f6a4c46250b9231884",
+  version: "0.1.0-preview.15",
+  tag: "v0.1.0-preview.15",
+  sourceRevision: "3d65d096e2e3b54776d430b7d27c449a2ab7444d",
   repositoryUrl: "https://github.com/devemit/sylvops",
   releaseUrl:
-    "https://github.com/devemit/sylvops/releases/tag/v0.1.0-preview.13",
+    "https://github.com/devemit/sylvops/releases/tag/v0.1.0-preview.15",
   releasesUrl: "https://github.com/devemit/sylvops/releases",
   siteUrl: "https://devemit.github.io/sylvops-docs/",
   basePath: "/sylvops-docs/",
