@@ -19,6 +19,17 @@ It includes:
 
 It excludes macOS packages, a signed native Windows installer, and signed update metadata.
 
+### What changed in preview.15
+
+- Select visible terminal text with a left drag, then click **Copy** in the terminal border or press **Ctrl+Shift+C**. Controllers and read-only observers can copy locally. **Ctrl+C** remains the Provider interrupt.
+- Selection stays still while the Session continues producing output. Copy preserves Unicode, indentation, and intentional line breaks, joins soft-wrapped rows, and leaves the selection available for another copy.
+- Escape clears selection and returns to live output. Typing, pasting, scrolling, resizing, resynchronizing, detaching, or switching Sessions clears stale selection.
+- Copy uses the system clipboard on the machine running the TUI. If it is unavailable, the TUI keeps selection and reports the problem. Selection is limited to the visible viewport and 1 MiB of text.
+
+Preview.15 also includes preview.14's terminal fixes: attachment uses the actual pane dimensions, normal-screen text reflows during width changes, and bounded resize/recovery snapshots preserve full-screen and mouse-input behavior. Rows displaced by narrowing remain available within retained history.
+
+After manually replacing an older preview, restart the daemon and clients together so they use the same downloaded build. The [published preview](https://github.com/devemit/sylvops/releases/tag/v0.1.0-preview.15) was built from [source commit 3d65d09](https://github.com/devemit/sylvops/commit/3d65d096e2e3b54776d430b7d27c449a2ab7444d) after its [verification and publication workflow](https://github.com/devemit/sylvops/actions/runs/40235580066) passed. Native Windows clipboard round-trip verification also passed during integration; interactive clipboard behavior on other desktops depends on their available system clipboard. Real-provider account smoke tests remain opt-in.
+
 ### What changed in preview.13
 
 - Windows Codex hooks use PowerShell-compatible commands, with literal relay paths preserved for spaces, Unicode, dollar signs, and backticks. The test fixture and actual CLI relay are exercised through PowerShell.
