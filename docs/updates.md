@@ -20,9 +20,19 @@ It includes:
 
 It excludes macOS portable archives, a signed native Windows installer, and signed update metadata. Mac DMGs are not Developer ID-signed or notarized; follow [macOS verification and first launch](./installation#macos-preview).
 
+### What changed in preview.17
+
+- Opening an input card or list row now marks the exact event reviewed. Orange unread emphasis and counts clear, while a neutral **Waiting for input** label remains until the Provider resolves it. **Mark reviewed** / **Ctrl+Shift+R** also works for requests arriving in an already-open Session.
+- Codex pre/post-tool hooks correlate permission requests with tool results and clear matched stale requests without hiding other outstanding approvals. Missing or ambiguous correlation remains conservative; a long-running tool can retain waiting until its result arrives.
+- Input popups and sounds wait one second and cancel on review, resolution, replacement, or foreground display. Other Sessions can still notify while you use the TUI. Delayed or duplicate callbacks do not create fresh unread attention for a completed tool.
+
+Restart daemon and clients together after installing this protocol 1.33 preview. Start or resume managed Codex Sessions and review the changed hook definitions in `/hooks`. Existing running Sessions keep their old profile. Review never approves a request; exact approval-dialog tracking and ordinary Codex user-question elicitation are outside this hook-based fix.
+
+Preview.17 uses [source commit dc675b8](https://github.com/devemit/sylvops/commit/dc675b8c2ab51d3a30637e2040d006a79ea38f07) and its [Unsigned Preview verification and publication workflow](https://github.com/devemit/sylvops/actions/runs/40335461985). Default verification uses fake providers; real-account smoke tests remain opt-in.
+
 ### What changed in preview.16
 
-The current preview adds native Intel and Apple silicon DMGs without paid Apple credentials. Each architecture passes native package installation, desktop/daemon launch, signature, and data-preserving removal checks before publication. Ad-hoc signatures do not establish Apple publisher trust. Browser-download first-launch exceptions are an interactive check separate from CI.
+Preview.16 added native Intel and Apple silicon DMGs without paid Apple credentials. Each architecture passes native package installation, desktop/daemon launch, signature, and data-preserving removal checks before publication. Ad-hoc signatures do not establish Apple publisher trust. Browser-download first-launch exceptions are an interactive check separate from CI.
 
 ### What changed in preview.15
 

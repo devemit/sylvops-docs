@@ -35,9 +35,11 @@ SylvOps uses a private Codex runtime when the installed CLI advertises `--no-dae
 
 ### Review Codex lifecycle hooks
 
-In a newly created managed Codex Session, open `/hooks`. Select each SylvOps event, open its handler, review the command, and press `t` to trust it. All eight handlers should show **Active**: `PermissionRequest`, `SessionStart`, `SessionEnd`, `UserPromptSubmit`, `SubagentStart`, `SubagentStop`, `Stop`, and `Interrupt`.
+In a newly created managed Codex Session, open `/hooks`. Select each SylvOps event, open its handler, review the command, and press `t` to trust it. All SylvOps handlers should show **Active**: `PermissionRequest`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`, `UserPromptSubmit`, `SubagentStart`, `SubagentStop`, `Stop`, and `Interrupt`.
 
 A changed hook command receives a new source hash and requires another review. SylvOps never transfers approvals to a changed command. Review inside the managed Session; a standalone Codex process does not have its Session-specific callback endpoint. See [missing callbacks](./troubleshooting#session-notifications-or-codex-resume-are-missing) if monitoring does not become ready after another prompt.
+
+The new pre/post-tool observers correlate permission requests with tool results in bounded daemon memory. Once every unambiguously matched requested tool returns, the waiting condition clears. Missing or ambiguous correlation stays conservative; a long-running tool can retain the waiting label after approval until its result arrives. Hooks do not provide exact approval-dialog resolution, and ordinary Codex user-question elicitation remains unmapped.
 
 ## Claude Code provider
 
@@ -105,7 +107,7 @@ Session lifecycle, Provider activity, and Attention Events are tracked independe
 
 Attention is durable until its reason-specific acknowledgement or recovery rule applies. Native notifications and sound are presentation only: they are claimed once across connected clients, are not replayed on startup, and can be controlled independently through Settings. A foreground client already showing the affected Session suppresses its external alert.
 
-Pending attention uses amber for input requests and recoverable failures, green for completion awaiting review, and red for terminal failure in TUI Cards/List and desktop Session rows. Selection does not erase the pending color. Reviewing or resolving the event removes its tint. Visibility alone does not acknowledge it. Explicit **Stop** resolves prior attention and records a stopped process without generating a completion or failure alert.
+Pending attention uses amber for input requests and recoverable failures, green for completion awaiting review, and red for terminal failure in TUI Cards/List. Desktop rows and tabs use written indicators without attention background tints. Successfully opening an input request or choosing **Mark reviewed** clears unread emphasis while preserving a neutral **Waiting for input** label; review does not answer the request. Selection and visibility alone do not acknowledge it. Input notifications wait one second and cancel if reviewed, resolved, replaced, or displayed in a focused client. Other Sessions can still notify. Explicit **Stop** resolves prior attention and records a stopped process without generating a completion or failure alert.
 
 ## Resume
 
