@@ -133,3 +133,26 @@ test("interactive workspace renders a useful static demo without JavaScript", ()
   assert.match(html, /Demo paused/);
   assert.match(html, /aria-live="off"/);
 });
+
+test("TUI demo exposes its hierarchy, main views, and explicit attachment", () => {
+  const html = readFileSync(join(outputDirectory, "index.html"), "utf8");
+  const demo = html.slice(html.indexOf('id="workspace-demo"'));
+  for (const label of [
+    "Workspace: Local",
+    "[e] Explorer",
+    "[a] Sessions (3)",
+    "1 Terminal",
+    "2 Changes",
+    "3 Details",
+    "Selecting a session never attaches automatically.",
+    "Playback advances all three sample sessions.",
+    "TUI settings",
+  ])
+    assert.ok(demo.includes(label), `${label} must be rendered`);
+  for (const view of ["terminal", "changes", "details"]) {
+    assert.ok(demo.includes(`aria-controls="demo-${view}-panel"`));
+    assert.ok(demo.includes(`id="demo-${view}-panel"`));
+  }
+  assert.match(demo, /aria-expanded="true"/);
+  assert.match(demo, /Terminal · detached/);
+});

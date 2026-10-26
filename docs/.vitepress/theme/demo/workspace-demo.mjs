@@ -92,7 +92,7 @@ export const demoSessions = [
 ];
 
 /**
- * One clock drives the selected sample. Leaving detaches its view, not its clock.
+ * One clock drives all sample sessions, independently of selection or attachment.
  * Visibility changes pause playback and never restart it without interaction.
  * @param {{ schedule?: (tick: () => void) => ReturnType<typeof setInterval>, cancel?: (handle: ReturnType<typeof setInterval>) => void }} options
  */
@@ -104,7 +104,7 @@ export function createDemoPlayer({
   const sessions = Object.fromEntries(
     demoSessions.map((session) => [
       session.id,
-      { linesShown: session.initialLines, attached: true },
+      { linesShown: session.initialLines, attached: false },
     ]),
   );
   const state = reactive({
@@ -139,24 +139,40 @@ export function createDemoPlayer({
     state.playing = false;
   }
 
+  function allCompleted() {
+    return demoSessions.every(
+      (session) =>
+        state.sessions[session.id].linesShown >= session.lines.length,
+    );
+  }
+
   function play() {
     pause();
-    if (disposed || completed() || !state.inViewport || !state.documentVisible)
+    if (
+      disposed ||
+      allCompleted() ||
+      !state.inViewport ||
+      !state.documentVisible
+    )
       return;
     state.playing = true;
     timer = schedule(() => {
       if (disposed || !state.playing) return;
-      state.sessions[state.selectedId].linesShown += 1;
-      if (completed()) pause();
+      for (const session of demoSessions) {
+        const progress = state.sessions[session.id];
+        if (progress.linesShown < session.lines.length)
+          progress.linesShown += 1;
+      }
+      if (allCompleted()) pause();
     });
   }
 
   /** @param {string} id */
   function select(id) {
     if (disposed || !demoSessions.some((session) => session.id === id)) return;
-    pause();
+    if (id === state.selectedId) return;
+    state.sessions[state.selectedId].attached = false;
     state.selectedId = id;
-    if (!state.reducedMotion) play();
   }
 
   function replay() {
@@ -165,7 +181,7 @@ export function createDemoPlayer({
     const session = selectedSession();
     state.sessions[session.id] = {
       linesShown: session.initialLines,
-      attached: true,
+      attached: state.sessions[session.id].attached,
     };
     play();
   }
@@ -191,6 +207,7 @@ export function createDemoPlayer({
   return {
     state,
     completed,
+    allCompleted,
     select,
     play,
     pause,
