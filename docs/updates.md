@@ -20,6 +20,16 @@ It includes:
 
 It excludes macOS portable archives, a signed native Windows installer, and signed update metadata. Mac DMGs are not Developer ID-signed or notarized; follow [macOS verification and first launch](./installation#macos-preview).
 
+### What changed in preview.18
+
+Preview.18 fixes Codex Session startup failing with `Codex hook profile hook approval metadata is invalid` after lifecycle hooks were approved. Stored approvals now cover all ten generated hooks, including `PreToolUse` and `PostToolUse`, and survive fresh launches, daemon restarts, and Conversation resume.
+
+The fix preserves existing hook approvals and Provider preferences. Hook commands are unchanged from preview.17. Existing approvals remain usable when the relay path is unchanged; installing at a different path can still require normal review of the new source in `/hooks`. Modified hook commands, unknown events, invalid hashes, and approvals for unrelated files remain rejected.
+
+After manually replacing the preview, restart the daemon and clients together. You do not need to delete your Codex configuration or reset valid approvals. See [Codex startup after approving hooks](./troubleshooting#codex-cannot-start-after-approving-lifecycle-hooks).
+
+Preview.18 uses [source commit 83c296b](https://github.com/devemit/sylvops/commit/83c296bed4439a998d3a9c8791d519445fd2ec5f) and its [Unsigned Preview verification and publication workflow](https://github.com/devemit/sylvops/actions/runs/40366143729). Regression checks cover all ten approvals, saved preferences, daemon restart, and resume. A bounded real-Codex launch check also reused an existing approved profile unchanged; account-specific completion and resume checks remain opt-in.
+
 ### What changed in preview.17
 
 - Opening an input card or list row now marks the exact event reviewed. Orange unread emphasis and counts clear, while a neutral **Waiting for input** label remains until the Provider resolves it. **Mark reviewed** / **Ctrl+Shift+R** also works for requests arriving in an already-open Session.
