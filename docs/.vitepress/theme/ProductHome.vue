@@ -47,7 +47,7 @@ const steps = [
           >
         </div>
         <ul class="hero-facts" aria-label="Product highlights">
-          <li>Windows + Linux</li>
+          <li>Windows + Linux + macOS</li>
           <li>Your agents, your machine</li>
           <li>Desktop · TUI · CLI</li>
         </ul>
@@ -253,10 +253,8 @@ const steps = [
           >Follow the first-session guide →</a
         >
         <p>
-          Unsigned preview · Windows and Linux x86_64<br /><a
-            :href="withBase('/security')"
-            >Security and privacy</a
-          >
+          Free unsigned preview · Windows/Linux x86_64 · macOS Intel/Apple
+          silicon<br /><a :href="withBase('/security')">Security and privacy</a>
           ·
           <a :href="withBase('/installation#sha-256-verification')"
             >Verify your download</a

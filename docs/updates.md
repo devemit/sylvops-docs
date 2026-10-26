@@ -15,9 +15,14 @@ It includes:
 - Linux x86_64 portable archive;
 - Linux x86_64 AppImage;
 - Linux x86_64 Debian package;
+- macOS Intel and Apple silicon DMGs with free ad-hoc signatures;
 - SHA-256 checksums and build-provenance attestations.
 
-It excludes macOS packages, a signed native Windows installer, and signed update metadata.
+It excludes macOS portable archives, a signed native Windows installer, and signed update metadata. Mac DMGs are not Developer ID-signed or notarized; follow [macOS verification and first launch](./installation#macos-preview).
+
+### What changed in preview.16
+
+The current preview adds native Intel and Apple silicon DMGs without paid Apple credentials. Each architecture passes native package installation, desktop/daemon launch, signature, and data-preserving removal checks before publication. Ad-hoc signatures do not establish Apple publisher trust. Browser-download first-launch exceptions are an interactive check separate from CI.
 
 ### What changed in preview.15
 
@@ -60,7 +65,7 @@ Automated publication is gated by hosted CI, package checks, checksums, and prov
 
 - Notification delivery and Attention review are more reliable, and Codex resume preserves hook approval while explaining when Conversation identity is not ready.
 - Bundled packages again carry the offline installation, first-run, update, removal, and troubleshooting guide. CI checks that guide before spending time compiling native packages.
-- This remains an unsigned Windows/Linux preview with manual replacement, checksums, and provenance attestations. macOS packages, a native Windows installer, and signed in-app updates remain excluded.
+- Those older previews supported Windows/Linux only. Current previews add ad-hoc-signed Mac DMGs; all previews still require manual replacement, checksums, and provenance verification, without a native Windows installer or signed in-app updates.
 
 ### Preview.11 changes included in preview.12
 
@@ -147,6 +152,8 @@ Finish or explicitly stop active Sessions, stop the old daemon, and close deskto
 6. Launch the intended executable and confirm the preview tag in desktop Settings or the wide TUI footer. `sylvops --version` reports the base workspace version and cannot identify a preview suffix by itself.
 
 Do not assume a moving “latest” link represents the newest unsigned preview; GitHub prereleases are intentionally separate from the future official latest release.
+
+On macOS, follow [manual DMG replacement](./installation#preview-upgrades): stop Sessions and the daemon, close clients, replace the app, then relaunch. A new package may need another app-specific exception. Removing the old application does not remove user data.
 
 ## Future official signed releases
 

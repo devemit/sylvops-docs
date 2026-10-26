@@ -74,6 +74,7 @@ For the current preview:
 - **Portable ZIP/archive:** remove the extracted application directory.
 - **Debian package:** run `sudo apt remove sylvops`.
 - **AppImage:** remove the AppImage file.
+- **macOS DMG installation:** stop Sessions and the daemon, close clients, then move `SylvOps.app` from its Applications folder to the Trash. Keep the separate configuration and data directories. See [macOS removal](./installation#uninstall-the-macos-preview).
 
 ## Targeted removal
 

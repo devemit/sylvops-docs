@@ -157,6 +157,12 @@ The public preview is unsigned. Verify the ZIP against `SHA256SUMS`, inspect the
 
 Do not bypass the operating-system warning. If Windows blocks the executable, build from source or wait for an official signed release.
 
+## macOS blocks the preview on first launch
+
+The Mac preview has a free ad-hoc signature and is not Developer ID-signed or notarized. Verify its exact DMG against the checksum file from the same release, copy it into Applications, and try opening the installed app. For an unidentified-developer or unnotarized-app alert on a trusted download, follow [macOS first launch](./installation#macos-first-launch) to create an app-specific exception in **Privacy & Security → Open Anyway**.
+
+Do not disable Gatekeeper or remove quarantine attributes. Stop on malware or damaged-app alerts; re-download and verify instead. Managed Macs can restrict app exceptions. If the downloaded architecture is wrong, choose Intel or Apple silicon using **About This Mac**. If a bare `sylvops` command is missing, use `/Applications/SylvOps.app/Contents/MacOS/sylvops doctor`; the DMG does not edit `PATH`.
+
 ## An action is blocked by active sessions
 
 Worktree removal, data removal, and future official update installation protect active sessions. Leave or stop the relevant session deliberately, then retry. Leaving a terminal does not stop its process.
