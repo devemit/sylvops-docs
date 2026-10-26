@@ -61,6 +61,14 @@ sylvops provider probe codex
 
 Complete authentication outside SylvOps. See the [official authentication guide](https://learn.chatgpt.com/docs/auth).
 
+## Codex cannot start after approving lifecycle hooks
+
+If Session creation fails with `Codex hook profile hook approval metadata is invalid`, install preview.18 or newer. Preview.17 generated ten lifecycle hooks but its saved-approval validator still recognized only eight, so approving `PreToolUse` or `PostToolUse` could block the next launch or resume.
+
+Finish or explicitly stop active Sessions, stop the old daemon, replace the executable, and restart the daemon and clients from the same build. Preview.18 accepts valid saved approvals for all ten hooks while preserving Provider preferences. Deleting Codex configuration or resetting valid approvals is unnecessary.
+
+If your installation changes the relay path or hook commands, review the new source normally in `/hooks`. A remaining validation failure can indicate malformed metadata or changed hook definitions; retain the categorical error for diagnosis rather than bypassing validation or sharing hook tokens.
+
 ## Session notifications or Codex resume are missing
 
 ### Symptoms
