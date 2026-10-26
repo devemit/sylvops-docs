@@ -53,7 +53,7 @@ Session status has three independent parts:
 - **Provider activity** records whether a live coding agent is working, awaiting input, completed, interrupted, or in a recoverable failure. Shell sessions have no Provider activity.
 - **Attention** records the latest input request, successful completion, recoverable failure, or terminal failure and whether it is still pending.
 
-A completed agent turn can therefore still belong to a live, attachable Session that is ready for another prompt. Process exit, a completed turn, and a request for attention are not interchangeable.
+Reviewing an input Attention Event means it has been seen; it does not answer it or end the Provider waiting condition. A reviewed live Session returns to Active Sessions with a neutral waiting label until trustworthy Provider evidence resolves it. A completed agent turn can therefore still belong to a live, attachable Session that is ready for another prompt. Process exit, a completed turn, and a request for attention are not interchangeable.
 
 ## Conversation and Session Lineage
 

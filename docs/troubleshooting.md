@@ -71,7 +71,7 @@ The Settings notification test works, but a Session does not alert when input is
 
 1. Install the intended newer preview. Finish or explicitly stop active Sessions, stop the old daemon, and launch the new executable explicitly. A running process does not change when source or downloads change.
 2. Refresh Codex Provider health and create a fresh managed Session.
-3. In that Session, open `/hooks`. Review each SylvOps handler and press `t` until all eight show **Active**. A corrected command has a new hash; old approvals are not copied.
+3. In that Session, open `/hooks`. Review each SylvOps handler and press `t` until all show **Active**, including `PreToolUse` and `PostToolUse`. A corrected command has a new hash; old approvals are not copied.
 4. Submit another prompt. If callbacks remain missing, inspect hook execution errors. The warning describes monitoring health; it does not mean the Provider process failed.
 5. Check that a Conversation identity was recorded before testing Stop and resume. Historical records missing that identity are not repaired by upgrading.
 
@@ -80,6 +80,12 @@ The Settings test exercises presentation only. Real Session alerts require an at
 Explicit SylvOps **Stop session** should produce **Stopped**, remove prior attention tint, and create no failure notification. An unexpected Provider exit without a trusted completion callback can still be **Failed**, even with exit code zero; report the categorical failure reason and whether Stop was used. Never share hook tokens, environment values, prompts, or terminal contents.
 
 Real-account completion/resume verification is opt-in and requires manual hook review. The unsigned preview's automated checks do not establish that account-specific result.
+
+## An input card stays orange or a request no longer needs me
+
+Use preview.17 or newer with matching daemon and client builds. Successfully open the card, or use **Mark reviewed** / **Ctrl+Shift+R** if the Session was already open. This clears unread emphasis without answering or approving anything. A neutral **Waiting for input** label can remain until the Provider resolves the condition.
+
+For Codex, start or resume a managed Session after upgrading and review the changed SylvOps source in `/hooks`, including `PreToolUse` and `PostToolUse`. Matched tool results clear obsolete requests. Long-running tools and missing or ambiguous correlation can retain waiting until a later trustworthy lifecycle event; terminal text and keystrokes are not used to guess. Input popups wait one second and cancel when the request is reviewed or resolved. Automatically handled requests that last longer can still notify.
 
 ## Claude Code is missing or too old
 
