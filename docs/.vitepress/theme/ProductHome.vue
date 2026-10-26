@@ -141,21 +141,21 @@ const steps = [
             <li>
               <span>01</span>
               <div>
-                <strong>Play a sample session</strong>
-                <p>Watch its terminal output advance.</p>
+                <strong>Attach and play a sample session</strong>
+                <p>Choose Attach, then Play to advance the sample output.</p>
               </div>
             </li>
             <li>
               <span>02</span>
               <div>
-                <strong>Choose Leave terminal</strong>
-                <p>The selected sample keeps progressing.</p>
+                <strong>Choose Detach or press Ctrl+]</strong>
+                <p>All three samples keep progressing while you explore.</p>
               </div>
             </li>
             <li>
               <span>03</span>
               <div>
-                <strong>Open terminal again</strong>
+                <strong>Attach to the session again</strong>
                 <p>Your output is still there.</p>
               </div>
             </li>

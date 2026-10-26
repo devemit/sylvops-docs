@@ -21,149 +21,151 @@ function setup() {
     player,
     timers,
     tick(count = 1) {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < count; i++)
         for (const timer of [...timers]) timer.tick();
-      }
     },
   };
 }
 
-test("initial workspace is static and becoming visible does not autoplay", () => {
+test("initial workspace is detached and visibility never autoplays", () => {
   const { player, timers } = setup();
   assert.equal(player.state.selectedId, "codex");
-  assert.equal(player.state.playing, false);
-  assert.equal(player.state.sessions.codex.linesShown, 3);
+  assert.equal(player.state.sessions.codex.attached, false);
   player.play();
   assert.equal(timers.size, 0);
   player.setInViewport(true);
-  assert.equal(timers.size, 0);
   assert.equal(player.state.playing, false);
+  assert.equal(timers.size, 0);
   player.dispose();
 });
 
-test("play advances whole lines; pause retains progress with only one clock", () => {
+test("one clock advances every session; pause retains all progress", () => {
   const { player, timers, tick } = setup();
   player.setInViewport(true);
   player.play();
   player.play();
   assert.equal(timers.size, 1);
   tick(2);
-  assert.equal(player.state.sessions.codex.linesShown, 5);
+  for (const session of demoSessions)
+    assert.equal(player.state.sessions[session.id].linesShown, 5);
   player.pause();
   tick(3);
   assert.equal(player.state.sessions.codex.linesShown, 5);
   assert.equal(timers.size, 0);
-  player.play();
-  tick();
-  assert.equal(player.state.sessions.codex.linesShown, 6);
   player.dispose();
 });
 
-test("switching tasks retains independent positions and pauses the old sample", () => {
+test("selecting does not attach or start playback", () => {
+  const { player, timers } = setup();
+  player.setInViewport(true);
+  player.select("claude");
+  assert.equal(player.state.selectedId, "claude");
+  assert.equal(player.state.sessions.claude.attached, false);
+  assert.equal(timers.size, 0);
+  player.open();
+  assert.equal(player.state.sessions.claude.attached, true);
+  assert.equal(player.state.playing, false);
+  player.dispose();
+});
+
+test("switching selection detaches the old terminal and keeps all sessions progressing", () => {
   const { player, timers, tick } = setup();
   player.setInViewport(true);
+  player.open();
   player.play();
   tick(2);
   player.select("claude");
-  assert.equal(player.state.selectedId, "claude");
+  assert.equal(player.state.sessions.codex.attached, false);
+  assert.equal(player.state.sessions.claude.attached, false);
   assert.equal(timers.size, 1);
-  tick(3);
-  assert.equal(player.state.sessions.codex.linesShown, 5);
-  assert.equal(player.state.sessions.claude.linesShown, 6);
-  player.select("shell");
-  tick();
-  assert.equal(player.state.sessions.shell.linesShown, 4);
+  tick(2);
+  assert.equal(player.state.sessions.codex.linesShown, 7);
+  assert.equal(player.state.sessions.claude.linesShown, 7);
+  player.open();
   player.select("codex");
-  tick();
-  assert.equal(player.state.sessions.codex.linesShown, 6);
-  assert.equal(player.state.sessions.claude.linesShown, 6);
-  assert.equal(timers.size, 1);
+  player.open();
+  assert.equal(player.state.sessions.claude.attached, false);
+  assert.equal(player.state.sessions.codex.attached, true);
   player.dispose();
 });
 
-test("leave keeps output progressing; reconnect restores the retained output", () => {
+test("detaching and reattaching preserves background output", () => {
   const { player, timers, tick } = setup();
   player.setInViewport(true);
+  player.open();
   player.play();
   tick();
   player.leave();
   assert.equal(player.state.sessions.codex.attached, false);
   assert.equal(player.state.playing, true);
-  assert.equal(timers.size, 1);
   tick(3);
   player.open();
-  assert.equal(player.state.sessions.codex.attached, true);
   assert.equal(player.state.sessions.codex.linesShown, 7);
-  assert.equal(player.state.playing, true);
+  assert.equal(player.state.sessions.codex.attached, true);
+  assert.equal(timers.size, 1);
   player.dispose();
 });
 
-test("detached state belongs to each task and a paused session stays paused on open", () => {
-  const { player } = setup();
+test("one completed sample cannot stop longer samples; all completion cancels the clock", () => {
+  const { player, timers, tick } = setup();
   player.setInViewport(true);
-  player.leave();
-  player.open();
-  assert.equal(player.state.playing, false);
-  player.leave();
   player.select("claude");
-  assert.equal(player.state.sessions.claude.attached, true);
-  player.select("codex");
-  assert.equal(player.state.sessions.codex.attached, false);
+  player.play();
+  tick(9);
+  assert.equal(player.completed(), true);
+  assert.equal(player.allCompleted(), false);
+  assert.equal(player.state.playing, true);
+  tick(100);
+  assert.equal(player.allCompleted(), true);
+  assert.equal(timers.size, 0);
+  for (const session of demoSessions)
+    assert.equal(
+      player.state.sessions[session.id].linesShown,
+      session.lines.length,
+    );
+  player.play();
+  assert.equal(timers.size, 0);
   player.dispose();
 });
 
-test("completion stops playback and replay resets only the selected sample", () => {
+test("replay resets only the selection and preserves its attachment", () => {
   const { player, timers, tick } = setup();
   player.setInViewport(true);
   player.play();
   tick(100);
-  assert.equal(player.completed(), true);
-  assert.equal(
-    player.state.sessions.codex.linesShown,
-    demoSessions[0].lines.length,
-  );
-  assert.equal(player.state.playing, false);
-  assert.equal(timers.size, 0);
-  player.play();
-  assert.equal(timers.size, 0);
-  player.select("claude");
-  tick(2);
-  player.select("codex");
-  assert.equal(player.state.playing, false);
-  player.leave();
   player.replay();
   assert.equal(player.state.sessions.codex.linesShown, 3);
-  assert.equal(player.state.sessions.codex.attached, true);
-  assert.equal(player.state.sessions.claude.linesShown, 5);
+  assert.equal(player.state.sessions.codex.attached, false);
+  assert.equal(
+    player.state.sessions.claude.linesShown,
+    demoSessions[1].lines.length,
+  );
   assert.equal(timers.size, 1);
+  player.open();
+  player.replay();
+  assert.equal(player.state.sessions.codex.attached, true);
   player.dispose();
 });
 
-test("leaving the viewport or hiding the page pauses until another interaction", () => {
+test("leaving the viewport or hiding the page pauses until explicit playback", () => {
   const { player, timers, tick } = setup();
   player.setInViewport(true);
   player.play();
   tick();
   player.setInViewport(false);
-  assert.equal(player.state.playing, false);
   assert.equal(timers.size, 0);
   player.setInViewport(true);
+  player.select("claude");
   assert.equal(player.state.playing, false);
   player.play();
-  tick();
   player.setDocumentVisible(false);
-  assert.equal(timers.size, 0);
-  player.select("claude");
   assert.equal(timers.size, 0);
   player.setDocumentVisible(true);
   assert.equal(player.state.playing, false);
-  assert.equal(player.state.sessions.codex.linesShown, 5);
-  player.play();
-  assert.equal(timers.size, 1);
   player.dispose();
 });
 
-test("reduced motion keeps task selection static but permits explicit playback", () => {
+test("reduced motion permits explicit playback but never auto starts", () => {
   const { player, timers, tick } = setup();
   player.setInViewport(true);
   player.setReducedMotion(true);
@@ -179,7 +181,7 @@ test("reduced motion keeps task selection static but permits explicit playback",
   player.dispose();
 });
 
-test("unmount cleanup cancels playback and prevents later restarts", () => {
+test("cleanup prevents stale ticks, restarts and selection changes", () => {
   const { player, timers } = setup();
   player.setInViewport(true);
   player.play();
@@ -195,7 +197,7 @@ test("unmount cleanup cancels playback and prevents later restarts", () => {
   assert.equal(player.state.sessions.codex.linesShown, 3);
 });
 
-test("unknown tasks cannot change the selected session", () => {
+test("unknown selection is ignored", () => {
   const { player } = setup();
   player.select("missing");
   assert.equal(player.state.selectedId, "codex");
