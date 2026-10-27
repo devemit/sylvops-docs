@@ -89,11 +89,13 @@ Explicit SylvOps **Stop session** should produce **Stopped**, remove prior atten
 
 Real-account completion/resume verification is opt-in and requires manual hook review. The unsigned preview's automated checks do not establish that account-specific result.
 
+Codex permission checks deliberately do not create input alerts in preview.19 or newer. Handle actual approvals in the Session terminal. Missing completion alerts or Conversation identity still require the callback checks above.
+
 ## An input card stays orange or a request no longer needs me
 
-Use preview.17 or newer with matching daemon and client builds. Successfully open the card, or use **Mark reviewed** / **Ctrl+Shift+R** if the Session was already open. This clears unread emphasis without answering or approving anything. A neutral **Waiting for input** label can remain until the Provider resolves the condition.
+For Codex, install preview.19 or newer and restart the daemon and clients from the same build. Permission checks now stay neutral: they do not create an orange card, attention count, popup, or sound. Actual approval prompts remain in the Session terminal. A new permission check or prompt resolves old input attention left by an earlier build. Existing valid hook approvals remain usable when the relay path is unchanged.
 
-For Codex, start or resume a managed Session after upgrading and review the changed SylvOps source in `/hooks`, including `PreToolUse` and `PostToolUse`. Matched tool results clear obsolete requests. Long-running tools and missing or ambiguous correlation can retain waiting until a later trustworthy lifecycle event; terminal text and keystrokes are not used to guess. Input popups wait one second and cancel when the request is reviewed or resolved. Automatically handled requests that last longer can still notify.
+For Claude Code input requests, successfully open the card or use **Mark reviewed** / **Ctrl+Shift+R** if the Session was already open. This clears unread emphasis without answering or approving anything. A neutral **Waiting for input** label remains until Claude resolves the condition. Input popups wait one second and cancel when reviewed, resolved, replaced, or shown in a focused client. Completion and failure alerts remain available for both Providers.
 
 ## Claude Code is missing or too old
 
