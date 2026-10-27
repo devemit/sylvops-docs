@@ -39,7 +39,7 @@ In a newly created managed Codex Session, open `/hooks`. Select each SylvOps eve
 
 A changed hook command receives a new source hash and requires another review. SylvOps never transfers approvals to a changed command. Review inside the managed Session; a standalone Codex process does not have its Session-specific callback endpoint. See [missing callbacks](./troubleshooting#session-notifications-or-codex-resume-are-missing) if monitoring does not become ready after another prompt.
 
-The new pre/post-tool observers correlate permission requests with tool results in bounded daemon memory. Once every unambiguously matched requested tool returns, the waiting condition clears. Missing or ambiguous correlation stays conservative; a long-running tool can retain the waiting label after approval until its result arrives. Hooks do not provide exact approval-dialog resolution, and ordinary Codex user-question elicitation remains unmapped.
+Codex permission hooks run before both automatic review and interactive approval. They do not establish that a human response is required, so SylvOps shows permission checks as neutral working activity without orange input cards, attention counts, popups, or sounds. Handle actual Codex approval prompts in the Session terminal. Completion and failure alerts still work. Exact approval-dialog visibility and ordinary Codex user-question elicitation remain unmapped. This behavior uses the existing approved hook definitions; it does not approve or deny commands or change Codex's permission mode.
 
 ## Claude Code provider
 

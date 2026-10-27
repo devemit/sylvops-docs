@@ -22,7 +22,7 @@ During startup, both clients display the uppercase ASCII `SYLVOPS` wordmark for 
 - `e` and `a` switch the navigator between Explorer and Active Sessions.
 - `Alt+Left` and `Alt+Right`, or dragging the divider, resize the navigator.
 - `1`, `2`, and `3` open Terminal, Changes, and Details in the main area.
-- In Changes, arrow keys, `j`/`k`, Page Up/Page Down, and the mouse wheel scroll the diff.
+- In Changes, arrow keys, `j`/`k`, and page keys move through the focused file list or diff. See [Changes shortcuts](#review-changes).
 - `Enter` explicitly opens the selected Session terminal.
 - `Ctrl+]` leaves an attached terminal without stopping its process.
 - `w` opens New Worktree for the Project that owns the selected Project, Worktree, or Session.
@@ -57,6 +57,8 @@ Cards are the default and show provider, Project, Worktree, recent activity, and
 
 Successfully opening an input card or list row marks that exact request reviewed: unread orange emphasis and the Needs Attention count clear, while a neutral **Waiting for input** label remains until the Provider resolves it. Review does not answer or approve the request. If a request arrives while the Session is already open, use **Mark reviewed** or **Ctrl+Shift+R**; selecting a row, focusing the window, and ordinary refreshes do not review it. Opening successful-completion or terminal-failure history acknowledges that exact event. A recoverable failure can be dismissed with `d`; the same effective condition stays quiet until recovery or replacement. These changes are daemon-owned and appear in every connected client.
 
+Codex permission checks remain neutral working activity and do not create input cards or notifications. Actual Codex approval prompts stay in the attached terminal. The input-review behavior above applies to explicit requests such as Claude Code permissions and user questions; Codex completion and failure alerts still appear normally.
+
 For a newly created Attention Event, one connected client may present a native notification and optional sound. Windows, macOS, and Linux use their available system path and fall back to an in-client message when native presentation is unavailable. A focused client already showing the affected Session suppresses the external alert across clients. Input popups and sound wait one second; review, resolution, replacement, or foreground display cancels delivery. Cards update immediately, and another Session can still notify while the TUI is focused. Startup, reconnect, rename, and unchanged refreshes do not replay it.
 
 The selected navigator view and width persist between runs. Width is bounded to 24–80 columns. On narrow terminals, `Tab` switches the full screen between Navigator and Main.
@@ -65,9 +67,11 @@ Terminal sizing follows the actual rendered main panel, including the current na
 
 ## Review changes
 
-Press `g` to load the selected Worktree's bounded, read-only Git diff, then press `2` to open Changes. File headers, hunk headers, additions, deletions, metadata, context, and notices use distinct theme-aware styles.
+Press `2` to open Changes for the selected Worktree. Files are grouped as Unstaged, Staged, and Untracked; a partially staged file appears in both tracked groups with different comparisons. At 100 columns of available Changes width, the file list sits beside the numbered diff. Narrower views switch between Files and file details.
 
-Use the arrow keys, `j` and `k`, Page Up and Page Down, or the mouse wheel to scroll. Reloading the diff returns to the top. Diff viewing does not alter the Worktree, and running Sessions continue while Changes is open.
+Use `Tab` to move between the file list and diff, `Enter` to open a file, and `Escape` to return toward Files and the Navigator. Arrows, `j`/`k`, and page keys move in the focused pane; left/right scroll code horizontally. `f` edits the path filter, `F` searches the loaded diff, `[`/`]` move between hunks, and `n`/`N` move between search matches. `p` pauses or resumes automatic refresh, and `R` refreshes once, including while paused. `/` keeps the global command palette.
+
+Changes refreshes every two seconds while visible and preserves the selected file and nearest logical line. A Stale label preserves the last successful review after a transient failure. Review is read-only; see [comparisons and limits](./working-with-git#view-changes).
 
 ## Use an attached terminal
 

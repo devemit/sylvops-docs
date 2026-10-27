@@ -20,6 +20,18 @@ It includes:
 
 It excludes macOS portable archives, a signed native Windows installer, and signed update metadata. Mac DMGs are not Developer ID-signed or notarized; follow [macOS verification and first launch](./installation#macos-preview).
 
+### What changed in preview.19
+
+- Codex permission checks stay neutral instead of creating orange input cards, attention counts, popups, or sounds. The hook runs before both automatic review and interactive approval, so it cannot establish that a person must respond. Actual Codex approvals remain in the Session terminal; completion and failure alerts still work. Claude input and permission alerts are unchanged.
+- The desktop and TUI now provide [file-oriented Changes review](./working-with-git#view-changes): Unstaged, Staged, and Untracked groups, path filtering, numbered per-file diffs, syntax colors, diff search, hunk navigation, and pause/refresh controls. Desktop also offers Unified and Split views and diff copying. Review remains read-only.
+- Issue Start Work sends readable task instructions to the Provider. Windows native notifications use the SylvOps application label. macOS packaging retries transient disk-image resource locks with bounded cleanup.
+
+This preview uses protocol 1.35. Finish or explicitly stop active Sessions, stop the old daemon, replace the preview, and restart daemon and clients from the same build. Existing hook definitions and valid approvals are preserved when the relay path is unchanged. A new Codex permission check or prompt clears legacy input attention; marking permission checks reviewed is no longer necessary. Exact human approval-dialog tracking and ordinary Codex user-question elicitation remain outside the hook integration.
+
+Preview.19 uses [source commit 4b3d3d6](https://github.com/devemit/sylvops/commit/4b3d3d6aa51b678c295d7e5a174e00b4df33d4b9) and its [Unsigned Preview verification and publication workflow](https://github.com/devemit/sylvops/actions/runs/40593008991). It retains the eight-asset unsigned preview format, including both macOS DMGs. Native package checks, checksums, and provenance do not establish account-specific real-Provider behavior; those smoke tests remain opt-in.
+
+The Codex correlation behavior described under preview.17 below is historical and is superseded by preview.19's neutral permission checks.
+
 ### What changed in preview.18
 
 Preview.18 fixes Codex Session startup failing with `Codex hook profile hook approval metadata is invalid` after lifecycle hooks were approved. Stored approvals now cover all ten generated hooks, including `PreToolUse` and `PostToolUse`, and survive fresh launches, daemon restarts, and Conversation resume.

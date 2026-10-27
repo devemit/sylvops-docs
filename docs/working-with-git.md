@@ -48,7 +48,17 @@ This makes it clear which agent owns which files and where its changes should be
 
 ## View changes
 
-Choose the **Changes** view for a bounded, read-only unified diff. File headers, hunk headers, additions, deletions, metadata, context, and notices use distinct theme-aware styles. The desktop preserves long lines and provides horizontal and vertical scrollbars. In the TUI, use the arrow keys, `j` and `k`, `Page Up` and `Page Down`, or the mouse wheel to scroll vertically.
+Choose **Changes** to review files in the selected Worktree, including edits from every Session working there. It does not attribute changes to one agent or compare committed branch history with `main`.
+
+Files appear in Unstaged, Staged, and Untracked groups. Unstaged compares the working directory with the index; Staged compares the index with HEAD, or the empty tree before a first commit. A partially staged file appears in both groups with a different comparison. Ignored files are excluded, and renames retain the original path. Filter by relative path, then select a file to load its numbered diff.
+
+Both clients provide syntax colors for common source/configuration formats, search within the loaded diff, matching-line counts, and previous/next hunk navigation. Desktop offers Unified and Split views; narrow panes fall back to Unified or separate Files and details screens. Resize the file list with its divider or Narrower/Wider controls. The Split Horizontal control pans both sides together while keeping line-number gutters visible. Drag across desktop diff rows to select whole lines and use **Copy selection**, or use **Copy diff** and **Copy path**. Copying excludes line-number gutters. See [TUI Changes shortcuts](./tui#review-changes) for keyboard controls.
+
+Changes refreshes every two seconds while visible. Selection and the nearest logical line survive content updates. **Pause** freezes the displayed review, including responses already in flight. **Refresh now** loads one fresh review while remaining paused; **Resume** restores automatic refresh. Hidden views do not poll. A transient failure keeps the last successful contents with a **Stale** label and retry control.
+
+Binary files, symlinks, submodules, special files, unsupported encodings, and unresolved conflicts show explanatory metadata rather than decoded content. Large results are visibly incomplete: status capture is capped at 4 MiB, the file list at 2,000 entries and a bounded path budget, and a selected diff at 256 KiB, 4,000 lines, and 8 KiB per displayed line. One large file does not hide other listed files; a truncated result is never reported as clean. The CLI's existing checkout-wide diff remains available.
+
+Review is read-only. It does not stage, unstage, discard, commit, push, open an editor, or run repository commands.
 
 SylvOps also refreshes tracked, untracked, and ignored file counts for Worktree status.
 
