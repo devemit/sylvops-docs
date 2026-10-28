@@ -31,15 +31,17 @@ codex login status
 
 The official OpenAI documentation explains ChatGPT and API-key authentication. Never paste credentials into SylvOps.
 
-SylvOps uses a private Codex runtime when the installed CLI advertises `--no-daemon`, so the Session owns its work and ephemeral hook credentials. On Windows, current Codex hook commands use PowerShell-compatible invocation of the validated native SylvOps relay.
+Managed Codex Sessions require a native CLI with remote-terminal authentication and stdio app-server support. SylvOps owns a private backend and connects the native terminal through an authenticated local bridge. Provider health explains when the installed CLI needs updating. Start or Resume a Session after replacing SylvOps; existing running Sessions retain their original runtime.
+
+Actual command, file-change, additional-permission, question, and MCP elicitation requests show **Waiting for input** and stop the Working animation. Answer or decline in the native terminal. Structured asynchronous questions pause the turn until your explicit reply starts the next turn, without generating a completion alert for the pause. Plain explanatory text does not create input attention.
 
 ### Review Codex lifecycle hooks
 
-In a newly created managed Codex Session, open `/hooks`. Select each SylvOps event, open its handler, review the command, and press `t` to trust it. All SylvOps handlers should show **Active**: `PermissionRequest`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`, `UserPromptSubmit`, `SubagentStart`, `SubagentStop`, `Stop`, and `Interrupt`.
+If Codex requests hook review in a managed Session, open `/hooks`. Select each SylvOps event, open its handler, review the command, and press `t` to trust it. All ten SylvOps handlers should show **Active**: `PermissionRequest`, `PreToolUse`, `PostToolUse`, `SessionStart`, `SessionEnd`, `UserPromptSubmit`, `SubagentStart`, `SubagentStop`, `Stop`, and `Interrupt`.
 
 A changed hook command receives a new source hash and requires another review. SylvOps never transfers approvals to a changed command. Review inside the managed Session; a standalone Codex process does not have its Session-specific callback endpoint. See [missing callbacks](./troubleshooting#session-notifications-or-codex-resume-are-missing) if monitoring does not become ready after another prompt.
 
-Codex permission hooks run before both automatic review and interactive approval. They do not establish that a human response is required, so SylvOps shows permission checks as neutral working activity without orange input cards, attention counts, popups, or sounds. Handle actual Codex approval prompts in the Session terminal. Completion and failure alerts still work. Exact approval-dialog visibility and ordinary Codex user-question elicitation remain unmapped. This behavior uses the existing approved hook definitions; it does not approve or deny commands or change Codex's permission mode.
+Codex permission hooks run before both automatic review and interactive approval. They remain neutral working activity because they do not establish that a human response is required. Actual structured input requests create attention instead. Opening or reviewing a card does not answer it, and waiting remains until Codex confirms the outstanding requests are resolved. SylvOps never approves or denies commands, changes Codex's permission mode, or transfers trust to changed hook commands. Existing valid approvals are preserved when the relay path is unchanged.
 
 ## Claude Code provider
 

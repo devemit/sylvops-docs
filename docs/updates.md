@@ -20,6 +20,21 @@ It includes:
 
 It excludes macOS portable archives, a signed native Windows installer, and signed update metadata. Mac DMGs are not Developer ID-signed or notarized; follow [macOS verification and first launch](./installation#macos-preview).
 
+### What changed in preview.20
+
+- Managed Codex Sessions now track actual structured questions and approval prompts. They show **Waiting for input**, stop the Working animation, and use the existing input attention and notification controls. Answer or decline in the native Session terminal to continue. Automatic permission checks remain neutral.
+- Structured asynchronous questions pause the current turn until your explicit reply starts the next turn. That pause does not create a completion alert. Plain text without structured question data does not pause work.
+- Opening an input card or choosing **Mark reviewed** clears unread emphasis while preserving waiting. Review never answers a question or approves a command. Input notifications retain their one-second delay and foreground suppression.
+- Codex backend cleanup now preserves confirmation that both owned process trees are empty, including backend failure and terminal exit before connection. Exited Sessions can be deleted after cleanup without restarting the daemon.
+
+This preview uses protocol 1.36. Finish or explicitly stop active Sessions, stop the old daemon, replace the preview, and restart daemon and clients from the same build. Start or Resume a Codex Session to use the new runtime; existing running Sessions keep their original launch configuration. Codex requires native remote-terminal authentication and stdio app-server support. Refresh Provider health after updating the native CLI if those capabilities are unavailable.
+
+No database migration or hook-trust reset is required. Existing valid approvals remain usable when the relay path is unchanged; review a changed source normally in `/hooks` if prompted. SylvOps preserves Provider permission settings and never supplies answers or approval decisions.
+
+Preview.20 uses [source commit b461926](https://github.com/devemit/sylvops/commit/b4619267f5e9f69fa03e1526e9d85460c9d21956) and its [successful Unsigned Preview workflow](https://github.com/devemit/sylvops/actions/runs/40753599820). All platform tests and native package checks passed, followed by checksum and provenance staging and publication of the same eight-asset preview format. Automated Provider checks use offline fixtures; account-specific real-Provider acceptance remains separate.
+
+Earlier entries describe their respective releases. Preview.20 supersedes the earlier hook-only limits on tracking actual Codex input requests.
+
 ### What changed in preview.19
 
 - Codex permission checks stay neutral instead of creating orange input cards, attention counts, popups, or sounds. The hook runs before both automatic review and interactive approval, so it cannot establish that a person must respond. Actual Codex approvals remain in the Session terminal; completion and failure alerts still work. Claude input and permission alerts are unchanged.

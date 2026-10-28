@@ -78,24 +78,24 @@ The Settings notification test works, but a Session does not alert when input is
 ### Fix
 
 1. Install the intended newer preview. Finish or explicitly stop active Sessions, stop the old daemon, and launch the new executable explicitly. A running process does not change when source or downloads change.
-2. Refresh Codex Provider health and create a fresh managed Session.
-3. In that Session, open `/hooks`. Review each SylvOps handler and press `t` until all show **Active**, including `PreToolUse` and `PostToolUse`. A corrected command has a new hash; old approvals are not copied.
-4. Submit another prompt. If callbacks remain missing, inspect hook execution errors. The warning describes monitoring health; it does not mean the Provider process failed.
+2. Refresh Codex Provider health. Preview.20 requires native remote-terminal authentication and stdio app-server support; update the native CLI if those capabilities are missing, then start or Resume a Session. Existing running Sessions retain their old runtime.
+3. If Codex asks for hook review, open `/hooks`, review the SylvOps handlers, and press `t` until all ten show **Active**. Valid unchanged approvals are preserved; approvals are not copied to changed commands.
+4. Submit another prompt and check monitoring readiness. Managed Codex obtains accepted lifecycle events through its private structured connection. If monitoring remains unavailable, retain the bounded Provider-health diagnostic for diagnosis.
 5. Check that a Conversation identity was recorded before testing Stop and resume. Historical records missing that identity are not repaired by upgrading.
 
-The Settings test exercises presentation only. Real Session alerts require an attention event from a valid callback. When a foreground client already displays the affected Session, native notification and sound are deliberately suppressed; pending attention remains colored until reviewed or resolved. Test background delivery with another Session or window selected.
+The Settings test exercises presentation only. Real Session alerts require an Attention Event from accepted Provider evidence. When a foreground client already displays the affected Session, native notification and sound are deliberately suppressed; pending attention remains until reviewed or resolved. Test background delivery with another Session or window selected.
 
-Explicit SylvOps **Stop session** should produce **Stopped**, remove prior attention tint, and create no failure notification. An unexpected Provider exit without a trusted completion callback can still be **Failed**, even with exit code zero; report the categorical failure reason and whether Stop was used. Never share hook tokens, environment values, prompts, or terminal contents.
+Explicit SylvOps **Stop session** should produce **Stopped**, clear prior attention, and create no failure notification. An unexpected Provider exit without accepted completion evidence can still be **Failed**, even with exit code zero; report the categorical failure reason and whether Stop was used. Never share hook tokens, environment values, prompts, or terminal contents.
 
-Real-account completion/resume verification is opt-in and requires manual hook review. The unsigned preview's automated checks do not establish that account-specific result.
+Real-account completion/resume verification is opt-in and requires normal hook review when Codex requests it. The unsigned preview's automated checks do not establish that account-specific result.
 
-Codex permission checks deliberately do not create input alerts in preview.19 or newer. Handle actual approvals in the Session terminal. Missing completion alerts or Conversation identity still require the callback checks above.
+Observational Codex permission checks remain neutral. In preview.20, actual structured questions and approval prompts create input attention and stop the Working animation. Answer in the Session terminal; opening a card or marking it reviewed does not answer it. Plain text without structured question data does not create waiting.
 
 ## An input card stays orange or a request no longer needs me
 
-For Codex, install preview.19 or newer and restart the daemon and clients from the same build. Permission checks now stay neutral: they do not create an orange card, attention count, popup, or sound. Actual approval prompts remain in the Session terminal. A new permission check or prompt resolves old input attention left by an earlier build. Existing valid hook approvals remain usable when the relay path is unchanged.
+For Codex, install preview.20 or newer, restart daemon and clients from the same build, and start or Resume a managed Session. Automatic permission checks stay neutral. Actual structured questions and approval prompts remain **Waiting for input** until answered or declined in the native terminal. Structured asynchronous questions deliberately pause the turn until your explicit reply; a reviewed card alone does not resume it. Existing valid hook approvals remain usable when the relay path is unchanged.
 
-For Claude Code input requests, successfully open the card or use **Mark reviewed** / **Ctrl+Shift+R** if the Session was already open. This clears unread emphasis without answering or approving anything. A neutral **Waiting for input** label remains until Claude resolves the condition. Input popups wait one second and cancel when reviewed, resolved, replaced, or shown in a focused client. Completion and failure alerts remain available for both Providers.
+For Codex and Claude Code input requests, successfully open the card or use **Mark reviewed** / **Ctrl+Shift+R** if the Session was already open. This clears unread emphasis without answering or approving anything. A neutral **Waiting for input** label remains until the Provider resolves the condition. Input popups wait one second and cancel when reviewed, resolved, replaced, or shown in a focused client. Completion and failure alerts remain available for both Providers.
 
 ## Claude Code is missing or too old
 
