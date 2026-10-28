@@ -20,6 +20,15 @@ It includes:
 
 It excludes macOS portable archives, a signed native Windows installer, and signed update metadata. Mac DMGs are not Developer ID-signed or notarized; follow [macOS verification and first launch](./installation#macos-preview).
 
+### What changed in preview.21
+
+- Managed Codex Sessions now accept larger startup app metadata, including embedded assets. This fixes Sessions closing during startup when the native backend returned metadata beyond the previous message limit. Provider messages remain bounded.
+- Read-only GitHub Issue and Pull Request browsing can use a saved Project association, otherwise a validated GitHub `origin`, otherwise the single unambiguous repository among validated GitHub remotes. Inferred choices are transient. Ambiguous repositories require an explicit choice, and Issue **Start Work** still requires a saved association.
+
+This preview retains protocol 1.36. Finish or explicitly stop active Sessions, stop the old daemon, replace the preview, and restart daemon and clients from the same build. Start or Resume a Codex Session to use the updated runtime; existing running Sessions keep their original launch configuration.
+
+Preview.21 uses [source commit dcd5eb9](https://github.com/devemit/sylvops/commit/dcd5eb96571d126b04923935a30397856f5a0f21) and its [successful Unsigned Preview workflow](https://github.com/devemit/sylvops/actions/runs/40778398050). All platform tests and native package checks passed, followed by checksum and provenance staging and publication of the same eight-asset preview format. Automated Provider checks use offline fixtures; real-account acceptance remains opt-in.
+
 ### What changed in preview.20
 
 - Managed Codex Sessions now track actual structured questions and approval prompts. They show **Waiting for input**, stop the Working animation, and use the existing input attention and notification controls. Answer or decline in the native Session terminal to continue. Automatic permission checks remain neutral.

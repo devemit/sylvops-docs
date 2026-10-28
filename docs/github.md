@@ -20,13 +20,17 @@ GitHub.com and GitHub Enterprise hosts are checked separately. Refresh GitHub st
 
 ## Associate a Project
 
-Select a Project and open its GitHub settings or GitHub surface. SylvOps lists only validated GitHub remotes already configured in that local repository, such as `origin` or `upstream`. Choose the intended remote explicitly.
+Read-only Issue and Pull Request browsing uses a saved Project association when available. Otherwise, SylvOps uses a validated GitHub `origin`, or the single unambiguous repository identified by the Project's validated GitHub remotes. Several remote names can identify the same repository. This inferred choice is transient and is not saved as an association.
+
+If no repository can be inferred, or different repositories remain ambiguous without a GitHub `origin`, select a Project and open its GitHub settings to choose the intended remote explicitly. SylvOps lists only validated GitHub remotes already configured in that local repository, such as `origin` or `upstream`.
+
+Issue **Start Work** always requires an explicitly saved Project association. Choose the intended remote in GitHub settings before starting work, even when read-only browsing already works.
 
 SylvOps records the selected remote and repository identity. It does not add or edit Git remotes. Changing or clearing an association requires confirmation when Issue-created Work Sources already exist, and historical Work Sources retain their original repository identity.
 
 ## Browse from the desktop
 
-A connected Project exposes separate Issues and Pull Requests views without requiring an active Worktree or Session. The desktop supports:
+A Project with a saved or inferred GitHub repository exposes separate Issues and Pull Requests views without requiring an active Worktree or Session. The desktop supports:
 
 - bounded list and detail views;
 - state, text, author, assignee, label, draft, review, and check filters where applicable;
