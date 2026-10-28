@@ -78,7 +78,7 @@ codex login
 codex login status
 ```
 
-After starting a managed Codex Session, open `/hooks`, review the SylvOps handlers, and press `t` on each until all eight show **Active**. The corrected Windows command in preview.13 has a new source hash, so an older approval does not cover it. Submit another prompt and check that the missing-callback warning clears. Follow [Codex lifecycle hook review](./providers#review-codex-lifecycle-hooks) for details.
+Refresh Codex Provider health, then start a managed Session. The native CLI must support remote-terminal authentication and a stdio app server. Actual structured questions and approval prompts show **Waiting for input**; answer in the terminal to continue. Structured asynchronous questions pause until your reply. If Codex asks for hook review, follow [Codex lifecycle hook review](./providers#review-codex-lifecycle-hooks) and trust all ten handlers normally. Existing valid approvals remain usable when the relay path is unchanged.
 
 ### Claude Code
 

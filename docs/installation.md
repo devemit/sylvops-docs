@@ -203,7 +203,7 @@ For Debian or Ubuntu, explicitly reinstall the verified local package when repla
 sudo apt install --reinstall ./sylvops-linux-x86_64.deb
 ```
 
-After upgrading to preview.13, create a fresh managed Codex Session and [review its lifecycle hooks](./providers#review-codex-lifecycle-hooks). The PowerShell-compatible Windows command has a new source hash, so old approvals do not apply. Existing Sessions keep their original launch configuration, and old records missing Conversation identity are not repaired.
+Preview.20 uses protocol 1.36: restart daemon and clients together after replacement. Start or Resume a managed Codex Session to use actual question and approval tracking; existing running Sessions keep their original runtime. Refresh Provider health and update the native Codex CLI if remote-terminal authentication or stdio app-server support is unavailable. Valid existing hook approvals are preserved when the relay path is unchanged; [review a changed source normally](./providers#review-codex-lifecycle-hooks) if prompted. Old records missing Conversation identity are not repaired automatically.
 
 On macOS, finish or stop Sessions, run `/Applications/SylvOps.app/Contents/MacOS/sylvops daemon stop`, and close desktop/TUI clients. Replace **SylvOps.app** with the copy from the verified newer DMG, eject it, and open the installed app. The newer preview may need its own first-launch exception. Configuration and Session data live outside the bundle and remain in place. Preview replacement does not provide automatic rollback.
 

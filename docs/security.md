@@ -9,9 +9,9 @@ SylvOps treats repository content, provider output, Git output, hooks, configura
 
 ## Local-first architecture
 
-Repositories, worktrees, the database, terminal processes, and bounded terminal history live on your computer. The control interface does not listen on a network TCP port.
+Repositories, worktrees, the database, terminal processes, and bounded terminal history live on your computer. Desktop, TUI, and CLI control traffic uses local operating-system transports. Managed Codex Sessions additionally use a Session-specific authenticated IPv4-loopback bridge for the native terminal. It accepts one terminal, rejects browser Origin handshakes, and does not listen on external network interfaces.
 
-Codex and Claude Code may use their own network services according to their configuration and account. SylvOps does not proxy or replace provider behavior.
+Codex and Claude Code may use their own network services according to their configuration and account. SylvOps does not proxy their cloud-service traffic.
 
 ## Authenticated local IPC
 
@@ -33,6 +33,8 @@ SylvOps does not install or update providers, initiate login, copy credentials, 
 :::
 
 Provider launches receive a reviewed environment that retains the provider's supported configuration-directory variable while excluding provider and GitHub API-key variables. Initial prompts are transient and are not written to prompt history, logs, audit events, SQLite, or persisted provider arguments.
+
+The Codex bridge uses an ephemeral Session token passed through the child environment, never command-line text or persisted launch arguments. Messages, outstanding requests, and event delivery are bounded. Actual structured input requests establish waiting; answers and approval decisions remain in the native terminal. Structured asynchronous questions pause through Codex's native turn-interruption protocol until an explicit user reply. SylvOps never fabricates an answer or changes the Provider's permission policy.
 
 Claude Code launches also receive an application-owned settings layer and per-session hook credential. The layer contains no provider credentials, preserves the effective user, project, and organization settings, and is removed when the daemon exits. Its hooks observe bounded lifecycle events; they cannot approve permissions, answer prompts, change permission mode, or rewrite Claude activity.
 
