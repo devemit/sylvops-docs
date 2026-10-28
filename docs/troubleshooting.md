@@ -61,6 +61,12 @@ sylvops provider probe codex
 
 Complete authentication outside SylvOps. See the [official authentication guide](https://learn.chatgpt.com/docs/auth).
 
+## Codex closes during Session startup
+
+If a managed Codex Session starts and then closes while loading app metadata, install preview.21 or newer. Some native Codex metadata replies include embedded assets and exceeded the earlier bridge message limit.
+
+Finish or explicitly stop active Sessions, stop the old daemon, replace the preview, and restart daemon and clients from the same build. Refresh Provider health, then start or Resume a Session. If startup still fails, retain the bounded Provider-health or failure diagnostic for diagnosis; do not share credentials, environment values, or terminal contents.
+
 ## Codex cannot start after approving lifecycle hooks
 
 If Session creation fails with `Codex hook profile hook approval metadata is invalid`, install preview.18 or newer. Preview.17 generated ten lifecycle hooks but its saved-approval validator still recognized only eight, so approving `PreToolUse` or `PostToolUse` could block the next launch or resume.
